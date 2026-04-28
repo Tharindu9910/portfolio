@@ -90,31 +90,37 @@ function SlideX({ children, from = "left", delay = 0, style }) {
 /* ─── Video: plays on hover, rewinds frame-by-frame on leave ─── */
 function ProjectVideo({ src }) {
   const videoRef = useRef(null);
-  const [hovered, setHovered] = useState(false);
+  const [playing, setPlaying] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const rafRef = useRef(null);
   const rewindRef = useRef(null);
+
+  useEffect(() => {
+    setIsMobile('ontouchstart' in window || navigator.maxTouchPoints > 0);
+    // eslint-disable-next-line react-hooks/immutability
+    return () => cancelAll();
+  }, []);
 
   const cancelAll = () => {
     cancelAnimationFrame(rafRef.current);
     clearTimeout(rewindRef.current);
   };
 
-  const handleEnter = () => {
+  const startPlay = () => {
     cancelAll();
-    setHovered(true);
+    setPlaying(true);
     const v = videoRef.current;
     if (!v) return;
     v.currentTime = 0;
     v.play().catch(() => {});
   };
 
-  const handleLeave = () => {
+  const stopPlay = () => {
     const v = videoRef.current;
     if (!v) return;
     v.pause();
-    setHovered(false);
+    setPlaying(false);
 
-    // Frame-by-frame rewind at ~60fps
     const rewind = () => {
       if (!videoRef.current) return;
       if (videoRef.current.currentTime <= 0.016) {
@@ -127,12 +133,19 @@ function ProjectVideo({ src }) {
     rewind();
   };
 
-  useEffect(() => () => cancelAll(), []);
+  const handleTap = () => {
+    playing ? stopPlay() : startPlay();
+  };
+
+  // Desktop handlers
+  const handleEnter = () => !isMobile && startPlay();
+  const handleLeave = () => !isMobile && stopPlay();
 
   return (
     <div
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
+      onClick={isMobile ? handleTap : undefined}
       style={{
         width: "100%",
         aspectRatio: "2/1",
@@ -141,13 +154,14 @@ function ProjectVideo({ src }) {
         position: "relative",
         cursor: "pointer",
         background: "#0a0a0a",
+        WebkitTapHighlightColor: "transparent", // removes grey flash on iOS
       }}
     >
-      {/* Play hint icon — fades out when hovered */}
+      {/* Play/Pause hint icon */}
       <div style={{
         position: "absolute", inset: 0, zIndex: 2,
         display: "flex", alignItems: "center", justifyContent: "center",
-        opacity: hovered ? 0 : 1,
+        opacity: playing ? 0 : 1,
         transition: "opacity .35s ease",
         pointerEvents: "none",
       }}>
@@ -158,9 +172,17 @@ function ProjectVideo({ src }) {
           display: "flex", alignItems: "center", justifyContent: "center",
           backdropFilter: "blur(8px)",
         }}>
-          <svg width="14" height="16" viewBox="0 0 14 16" fill="none">
-            <path d="M2 1.5l11 6.5L2 14.5V1.5z" fill="#fabd00"/>
-          </svg>
+          {/* Show pause icon when playing on mobile, play icon otherwise */}
+          {playing && isMobile ? (
+            <svg width="14" height="16" viewBox="0 0 14 16" fill="none">
+              <rect x="1" y="1" width="4" height="14" rx="1" fill="#fabd00"/>
+              <rect x="9" y="1" width="4" height="14" rx="1" fill="#fabd00"/>
+            </svg>
+          ) : (
+            <svg width="14" height="16" viewBox="0 0 14 16" fill="none">
+              <path d="M2 1.5l11 6.5L2 14.5V1.5z" fill="#fabd00"/>
+            </svg>
+          )}
         </div>
       </div>
 
@@ -169,15 +191,15 @@ function ProjectVideo({ src }) {
         src={src}
         muted
         playsInline
-        preload="metadata"
+        preload="metadata"        // only loads thumbnail on mobile, saves data
         style={{
           width: "100%",
           height: "100%",
           objectFit: "cover",
           display: "block",
           transition: "transform .55s cubic-bezier(.16,1,.3,1), filter .4s ease",
-          transform: hovered ? "scale(1.04)" : "scale(1)",
-          filter: hovered ? "brightness(1)" : "brightness(0.55)",
+          transform: playing ? "scale(1.04)" : "scale(1)",
+          filter: playing ? "brightness(1)" : "brightness(0.55)",
         }}
       />
     </div>
@@ -283,7 +305,7 @@ function ProjectSection({ project }) {
 
   return (
     <section style={{ background: project.bg, padding: "80px clamp(24px,5vw,80px)" }}>
-      <div style={{
+      <div className="project-grid" style={{
         maxWidth: 1100, margin: "0 auto",
         display: "grid",
         gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
@@ -317,6 +339,14 @@ export default function Page() {
         body { background: #0e0e0e; }
         ::-webkit-scrollbar { width: 3px; }
         ::-webkit-scrollbar-thumb { background: #1f2020; }
+        @media (max-width: 600px) {
+  .project-grid {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .project-text { order: 2 !important; text-align: left !important; }
+  .project-video { order: 1 !important; }
+}
       `}</style>
       <main className="!pt-10" style={{ background: "#0e0e0e" }}>
         {PROJECTS.map(p => (

@@ -192,18 +192,22 @@ export default function ProjectPage({ params }) {
         .footer-links-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
         .nav-links { display: flex; }
         .challenge-grid { display: grid; grid-template-columns: 1fr 1fr; }
+        .challenge-img-wrap { position: relative;overflow: hidden;min-height: 320px }
 
-        @media (max-width: 900px) {
+        @media (max-width: 960px) {
           .pp-wrap    { padding: 0 28px; }
           .meta-grid  { grid-template-columns: 1fr 1fr; }
           .meta-grid > div:last-child { grid-column: span 2; }
           .arch-grid  { grid-template-columns: 1fr; gap: 24px; }
           .arch-sticky { position: static !important; }
+          .arch-section { grid-template-columns: 1fr !important; gap: 32px !important; padding: 48px 0 !important;}
           .gallery-grid { gap: 20px; }
-          .challenge-grid { grid-template-columns: 1fr; }
+          .challenge-grid { grid-template-columns: 1fr !important; }
           .metrics-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
           .footer-grid  { grid-template-columns: 1fr; gap: 40px; }
           .pp-h1 { font-size: clamp(40px, 10vw, 72px) !important; }
+          .challenge-text-border { border-right: none !important;border-bottom: 1px solid var(--border-faint) !important;}
+          .challenge-img-wrap { min-height: 240px !important;}
         }
         @media (max-width: 600px) {
           .pp-wrap    { padding: 0 18px; }
@@ -215,6 +219,9 @@ export default function ProjectPage({ params }) {
           .nav-links { display: none !important; }
           .pp-h1 { font-size: clamp(36px, 12vw, 52px) !important; }
           .next-proj-title { font-size: clamp(32px, 10vw, 52px) !important; }
+          .challenge-img-wrap {
+    min-height: 200px !important;
+  }
         }
       `}</style>
 
@@ -417,7 +424,7 @@ export default function ProjectPage({ params }) {
                 }}>
                   <Image
                     src={PROJECTS[index]?.techinical_decisions?.image?.src || 'https://images.unsplash.com/photo-1639322537228-f710d846310a?w=1400&q=80'}
-                    alt="Abstract 3D network nodes with glowing gold paths on dark background"
+                    alt="Architectural or system diagram illustrating key technical decisions"
                     fill
                     priority
                     style={{ objectFit: 'center', opacity: 1 }}
@@ -444,7 +451,7 @@ export default function ProjectPage({ params }) {
             </section>
 
             {/* ══ INTERFACE GALLERY ══════════════════════════════ */}
-            <section className="pp-reveal" style={{ marginBottom: '128px' }}>
+            {gallery?.length>0 && <section className="pp-reveal" style={{ marginBottom: '128px' }}>
               <div style={{
                 display: 'flex', justifyContent: 'space-between',
                 alignItems: 'flex-end', marginBottom: '64px',
@@ -544,66 +551,62 @@ export default function ProjectPage({ params }) {
                   </div>
                 ))}
               </div>
-            </section>
+            </section>}
 
             {/* ══ TECHNICAL CHALLENGES ══════════════════════════ */}
-            <section className="arch-section" s style={{
-    display: 'grid',
-    gridTemplateColumns: '5fr 3fr',
-    gap: '64px',
-    alignItems: 'start',
-    padding: '80px 0'
-  }}>
-              <div className="challenge-grid" style={{ background: C.bgCard }}>
-                {/* Left: text */}
-                <div style={{
-                  padding: 'clamp(32px,5vw,80px)',
-                  borderRight: `1px solid ${C.borderFaint}`,
-                }}>
-                  <h2 style={{
-                    fontFamily: font.head, fontWeight: 700, fontSize: '26px',
-                    letterSpacing: '-0.03em', textTransform: 'uppercase',
-                    color: C.text, marginBottom: '32px',
-                  }}>TECHNICAL<br />CHALLENGES</h2>
+            <section className="arch-section" style={{
 
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
-                    {PROJECTS[index]?.challenges.map(c => (
-                      <div key={c.num}>
-                        <h3 style={{
-                          fontFamily: font.label, fontSize: '11px', fontWeight: 500,
-                          color: C.primary, letterSpacing: '0.18em', textTransform: 'uppercase',
-                          marginBottom: '8px',
-                        }}>{c.num}. {c.title}</h3>
-                        <p style={{
-                          fontFamily: font.body, fontSize: '14px',
-                          color: C.muted, lineHeight: 1.72,
-                        }}>{c.body}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+  padding: '80px 0'
+}}>
+  <div className="challenge-grid" style={{ background: C.bgCard }}>
 
-                {/* Right: image */}
-                <div style={{ position: 'relative', overflow: 'hidden', minHeight: '320px' }}>
-                  <Image
-                    src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=900&q=80"
-                    alt="Complex data structures with glowing network architecture"
-                    fill
-                    style={{
-                      objectFit: 'cover', opacity: 0.45,
-                      transition: 'transform 0.7s',
-                    }}
-                    sizes="(max-width: 900px) 100vw, 50vw"
-                    className="challenge-img"
-                  />
-                  <div style={{
-                    position: 'absolute', inset: 0,
-                    background: `rgba(250,189,0,0.03)`,
-                    transition: 'background 0.5s',
-                  }} />
-                </div>
-              </div>
-            </section>
+    {/* Left: text */}
+    <div className="challenge-text-border" style={{
+      padding: 'clamp(32px,5vw,80px)',
+      borderRight: `1px solid ${C.borderFaint}`,
+    }}>
+      <h2 style={{
+        fontFamily: font.head, fontWeight: 700, fontSize: '26px',
+        letterSpacing: '-0.03em', textTransform: 'uppercase',
+        color: C.text, marginBottom: '32px',
+      }}>TECHNICAL<br />CHALLENGES</h2>
+
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+        {PROJECTS[index]?.challenges.map(c => (
+          <div key={c.num}>
+            <h3 style={{
+              fontFamily: font.label, fontSize: '11px', fontWeight: 500,
+              color: C.primary, letterSpacing: '0.18em', textTransform: 'uppercase',
+              marginBottom: '8px',
+            }}>{c.num}. {c.title}</h3>
+            <p style={{
+              fontFamily: font.body, fontSize: '14px',
+              color: C.muted, lineHeight: 1.72,
+            }}>{c.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    {/* Right: image */}
+    <div className="challenge-img-wrap">
+      <Image
+        src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=900&q=80"
+        alt="Complex data structures with glowing network architecture"
+        fill
+        style={{ objectFit: 'cover', opacity: 0.45, transition: 'transform 0.7s' }}
+        sizes="(max-width: 900px) 100vw, 50vw"
+        className="challenge-img"
+      />
+      <div style={{
+        position: 'absolute', inset: 0,
+        background: `rgba(250,189,0,0.03)`,
+        transition: 'background 0.5s',
+      }} />
+    </div>
+
+  </div>
+</section>
 
             {/* ══ METRICS ════════════════════════════════════════ */}
             <section className="pp-reveal" style={{ marginBottom: '192px' }}>
@@ -693,7 +696,8 @@ export default function ProjectPage({ params }) {
           filter: grayscale(0%) !important;
           opacity: 1 !important;
         }
-        .challenge-grid:hover .challenge-img {
+        .challenge-grid:hover 
+        .challenge-img {
           transform: scale(1.05);
         }
         @media (max-width: 600px) {

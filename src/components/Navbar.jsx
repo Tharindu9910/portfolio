@@ -89,7 +89,7 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       <div className={`mobile-menu${menuOpen ? ' open' : ''}`}>
-        {['PROJECTS', 'EXPERIENCE', 'CONTACT'].map((link) => (
+        {/* {['PROJECTS', 'EXPERIENCE', 'CONTACT'].map((link) => (
           <a
             key={link}
             href={`#${link.toLowerCase()}`}
@@ -99,8 +99,17 @@ export default function Navbar() {
           >
             {link}
           </a>
-        ))}
-        <a href="#" className="btn btn-primary" style={{ width: 'fit-content' }}>RESUME</a>
+        ))} */}
+         <Link key={1} href={`/#`} className="nav-link">
+                HOME
+              </Link>
+             <Link key={2} href={`/#project-list`} className="nav-link">
+                PROJECTS
+              </Link>
+              <Link key={3} href={`/contact`} className="nav-link">
+                CONTACT
+              </Link>
+        <a href="/resume" className="btn btn-primary" style={{ width: 'fit-content' }}>RESUME</a>
       </div>
     </>
   )

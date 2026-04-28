@@ -153,23 +153,6 @@ export default function HeroSection() {
             </a>
           </div>
         </div>
-        <div 
-      style={{
-        padding: '40px',
-        backgroundColor: clicked ? 'green' : 'red',
-        color: 'white',
-        textAlign: 'center',
-        userSelect: 'none',
-        touchAction: 'manipulation',
-        cursor: 'pointer'
-      }}
-      onClick={() => {
-        console.log("Clicked!");
-        setClicked(!clicked);
-      }}
-    >
-      {clicked ? "IT WORKED" : "TAP ME"}
-    </div>
 
         <ScrollLabel />
       </div>
