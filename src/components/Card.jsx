@@ -1,6 +1,7 @@
 'use client'
 import Image from 'next/image'
 import TabPills from './TabPills'
+import { ArrowUpRightIcon } from 'lucide-react'
 
 
 export default function Card({ tabs, image, imageAlt, showCode, title, description, linkText }) {
@@ -65,26 +66,43 @@ export default function Card({ tabs, image, imageAlt, showCode, title, descripti
 
       {/* Link */}
       <span
-        href="#"
-        style={{
-          fontFamily: 'Inter, sans-serif',
-          fontWeight: 500,
-          fontSize: '12px',
-          color: '#FFD000',
-          textDecoration: 'none',
-          letterSpacing: '0.1em',
-          textTransform: 'uppercase',
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '6px',
-          transition: 'opacity 0.2s',
-          alignSelf: 'flex-start',
-        }}
-        onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.65')}
-        onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}
-      >
-        {linkText || 'VIEW MORE'} ↗
-      </span>
+  style={{
+    fontFamily: 'Inter, sans-serif',
+    fontWeight: 500,
+    fontSize: '12px',
+    color: '#FFD000',
+    textDecoration: 'none',
+    letterSpacing: '0.08em',
+    textTransform: 'uppercase',
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '4px',
+    cursor: 'pointer',
+    transition: 'all 0.2s ease',
+  }}
+  onMouseEnter={(e) => {
+    e.currentTarget.style.opacity = '0.75';
+    const icon = e.currentTarget.querySelector('svg');
+    if (icon) icon.style.transform = 'translate(2px, -2px)';
+  }}
+  onMouseLeave={(e) => {
+    e.currentTarget.style.opacity = '1';
+    const icon = e.currentTarget.querySelector('svg');
+    if (icon) icon.style.transform = 'translate(0, 0)';
+  }}
+>
+  <span style={{ lineHeight: 1 }}>
+    {linkText || 'VIEW MORE'}
+  </span>
+
+  <ArrowUpRightIcon
+    style={{
+      width: '14px',
+      height: '14px',
+      transition: 'transform 0.2s ease',
+    }}
+  />
+</span>
     </div>
   )
 }

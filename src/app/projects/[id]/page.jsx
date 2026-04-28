@@ -464,10 +464,6 @@ export default function ProjectPage({ params }) {
                     color: C.text, marginBottom: '12px',
                   }}>INTERFACE GALLERY</h2>
                   <div style={{ width: '48px', height: '4px', background: C.primary, marginBottom: '20px' }} />
-                  <p style={{ fontFamily: font.body, fontSize: '16px', color: C.muted, lineHeight: 1.7 }}>
-                    Precision-engineered user interfaces designed for complex data orchestration
-                    and high-performance visual analysis.
-                  </p>
                 </div>
 
                 {/* Nav arrows */}
