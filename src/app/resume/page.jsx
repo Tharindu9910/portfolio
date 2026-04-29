@@ -36,10 +36,15 @@ const EXPERIENCE = [
     role: 'Full-Stack Developer',
     company: 'EBridge Solutions',
     summary:
-      'Maintained and enhanced Epitoni SaaS, optimizing API performance and reducing cloud costs. Built a real-time messaging backend for the mobile app, managed Ubuntu servers, guided the team on E2EE implementation, and developed an embeddable AI-agent widget',
+      '',
     achievements: [
-      'Refactored legacy monolith into a service-oriented architecture, reducing infrastructure costs by 40%.',
-      'Developed a custom internal UI framework using Tailwind and Radix UI to standardize design across 12 product squads.',
+      'Designed and developed scalable backend services serving 500+ active users with sub-100ms response times',
+      'Improved data retrieval throughput by ~40% through optimized REST APIs and database queries',
+      'Developed graph-based data models using Neo4j and Cypher for complex relational data',
+      'Implemented secure authentication using JWT, RBAC, and bcrypt password hashing',
+      'Containerized applications with Docker and deployed on Google Cloud Run with zero-downtime',
+      'Built MQTT-based real-time messaging system using Mosquitto for device communication',
+      'Reduced API latency by ~30% through profiling and performance optimization'
     ],
   },
   {
@@ -47,10 +52,11 @@ const EXPERIENCE = [
     role: 'Junior Software Engineer',
     company: 'EBridge Solutions',
     summary:
-      'Owned the development of multiple high-traffic SaaS applications. Focused on reactive state management and end-to-end type safety across the entire stack.',
+      'Contributed to frontend and mobile application development, delivering production-ready features in an agile environment.',
     achievements: [
-      'Engineered a white-label e-commerce solution used by 50+ enterprise clients globally.',
-      'Implemented automated CI/CD pipelines using GitHub Actions, decreasing deployment time from 1 hour to 12 minutes.',
+      'Developed responsive frontend applications using React.js and Next.js with consistent feature delivery',
+      'Built cross-platform mobile modules using Flutter and Riverpod',
+      'Actively participated in agile processes including daily scrums and sprint planning',
     ],
   },
 ]
