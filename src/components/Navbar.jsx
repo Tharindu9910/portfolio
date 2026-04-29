@@ -14,7 +14,7 @@ export default function Navbar() {
       { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out' }
     )
   }, [])
-
+  const handleCloseMenu = () => setMenuOpen(false);
   return (
     <>
       <nav
@@ -89,24 +89,13 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       <div className={`mobile-menu${menuOpen ? ' open' : ''}`}>
-        {/* {['PROJECTS', 'EXPERIENCE', 'CONTACT'].map((link) => (
-          <a
-            key={link}
-            href={`#${link.toLowerCase()}`}
-            className="nav-link"
-            onClick={() => setMenuOpen(false)}
-            style={{ fontSize: '18px' }}
-          >
-            {link}
-          </a>
-        ))} */}
-         <Link key={1} href={`/#`} className="nav-link">
+         <Link key={1} href={`/#`} className="nav-link" onClick={handleCloseMenu}>
                 HOME
               </Link>
-             <Link key={2} href={`/#project-list`} className="nav-link">
+             <Link key={2} href={`/#project-list`} className="nav-link" onClick={handleCloseMenu}>
                 PROJECTS
               </Link>
-              <Link key={3} href={`/contact`} className="nav-link">
+              <Link key={3} href={`/contact`} className="nav-link" onClick={handleCloseMenu}>
                 CONTACT
               </Link>
         <a href="/resume" className="btn btn-primary" style={{ width: 'fit-content' }}>RESUME</a>

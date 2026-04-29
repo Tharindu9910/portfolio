@@ -213,9 +213,11 @@ export default function ResumePage() {
       </p>
     </div>
   </div>
-  <a href="#experience" className="btn btn-primary rp-meta-btn">
+  <button onClick={()=>{
+         window.location.href='https://drive.google.com/uc?export=download&id=1BXEZ9GyIpTQHSMXA-NmbLz7R53lLHRbE'
+        }} className="btn btn-primary rp-meta-btn">
     DOWNLOAD RESUME
-  </a>
+  </button>
 </div>
           </div>
 

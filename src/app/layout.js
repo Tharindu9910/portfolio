@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar'
 import './globals.css'
 
 export const metadata = {
-  title: 'ARCHITECT.FS — Senior Software Engineer',
+  title: 'Tharindu Thennakoon | Portfolio',
   description:
     'Full-stack software engineer specializing in high-performance web and mobile systems for enterprise and scale.',
 }
