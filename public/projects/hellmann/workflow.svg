@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" width="1200" height="520" font-family="Inter, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#8a8a8a"/>
+    </marker>
+    <marker id="y" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#FFD000"/>
+    </marker>
+    <style>
+      .b{fill:#1a1a1a;stroke:#333;stroke-width:1.5}
+      .t{fill:#e8e8e8;font-size:17px;font-weight:600;text-anchor:middle;dominant-baseline:central;letter-spacing:.02em}
+      .l{stroke:#8a8a8a;stroke-width:2;fill:none}
+      .s{fill:#8a8a8a;font-size:12px;letter-spacing:.12em;font-weight:600}
+    </style>
+  </defs>
+  <rect width="1200" height="520" fill="#111111"/>
+
+  <text x="40" y="58" fill="#FFD000" font-size="14" font-weight="700" letter-spacing=".18em">PURCHASE ORDER WORKFLOW</text>
+  <text x="40" y="82" class="s">11 STAGES · 9 TEAMS · LIVE STATE</text>
+
+  <!-- Row 1 -->
+  <rect class="b" x="40" y="120" width="180" height="56" rx="10"/><text class="t" x="130" y="148">Planning</text>
+  <rect class="b" x="270" y="120" width="180" height="56" rx="10"/><text class="t" x="360" y="148">Inventory</text>
+  <rect class="b" x="500" y="120" width="180" height="56" rx="10"/><text class="t" x="590" y="148">Pick</text>
+  <rect class="b" x="730" y="120" width="180" height="56" rx="10"/><text class="t" x="820" y="148">Split</text>
+  <path class="l" d="M220 148H266" marker-end="url(#a)"/>
+  <path class="l" d="M450 148H496" marker-end="url(#a)"/>
+  <path class="l" d="M680 148H726" marker-end="url(#a)"/>
+
+  <!-- Branch -->
+  <rect class="b" x="980" y="70" width="180" height="56" rx="10"/><text class="t" x="1070" y="98">Security Tag</text>
+  <rect class="b" x="980" y="170" width="180" height="56" rx="10"/><text class="t" x="1070" y="198">Sticker</text>
+  <path class="l" d="M910 148H945V98H976" marker-end="url(#a)"/>
+  <path class="l" d="M945 148V198H976" marker-end="url(#a)"/>
+  <text x="953" y="88" class="s" font-size="10">US</text>
+  <text x="953" y="222" class="s" font-size="10">OTHER</text>
+
+  <!-- Merge into FCA -->
+  <path class="l" d="M1160 98H1182V262H1070"/>
+  <path class="l" d="M1070 226V296" marker-end="url(#a)"/>
+
+  <!-- Row 2 (right to left) -->
+  <rect class="b" x="980" y="300" width="180" height="56" rx="10"/><text class="t" x="1070" y="328">FCA Audit</text>
+  <rect class="b" x="730" y="300" width="180" height="56" rx="10"/><text class="t" x="820" y="328">Metal Detection</text>
+  <rect class="b" x="500" y="300" width="180" height="56" rx="10"/><text class="t" x="590" y="328">Relocation</text>
+  <rect class="b" x="270" y="300" width="180" height="56" rx="10"/><text class="t" x="360" y="328">Loading</text>
+  <rect x="40" y="300" width="180" height="56" rx="28" fill="#FFD000"/><text class="t" x="130" y="328" style="fill:#111">Dispatch</text>
+  <path class="l" d="M980 328H914" marker-end="url(#a)"/>
+  <path class="l" d="M730 328H684" marker-end="url(#a)"/>
+  <path class="l" d="M500 328H454" marker-end="url(#a)"/>
+  <path class="l" d="M270 328H224" marker-end="url(#a)"/>
+
+  <!-- Escalation -->
+  <rect x="855" y="430" width="180" height="56" rx="10" fill="#1a1a1a" stroke="#FFD000" stroke-width="1.5"/>
+  <text class="t" x="945" y="458">Supervisor</text>
+  <path d="M1070 356V458H1039" stroke="#FFD000" stroke-width="2" fill="none" stroke-dasharray="6 5" marker-end="url(#y)"/>
+  <path d="M820 356V458H851" stroke="#FFD000" stroke-width="2" fill="none" stroke-dasharray="6 5" marker-end="url(#y)"/>
+  <text x="945" y="404" fill="#FFD000" font-size="11" font-weight="700" letter-spacing=".14em" text-anchor="middle">FAIL / HOLD</text>
+
+  <!-- Per-team lifecycle legend -->
+  <text x="40" y="420" class="s">EVERY TEAM RUNS THE SAME LIFECYCLE</text>
+  <g font-size="12" font-weight="600" letter-spacing=".08em" text-anchor="middle" dominant-baseline="central">
+    <rect x="40" y="440" width="110" height="34" rx="17" fill="none" stroke="#444"/><text x="95" y="457" fill="#cfcfcf">QUEUE</text>
+    <rect x="170" y="440" width="120" height="34" rx="17" fill="none" stroke="#444"/><text x="230" y="457" fill="#cfcfcf">ACCEPTED</text>
+    <rect x="310" y="440" width="110" height="34" rx="17" fill="none" stroke="#444"/><text x="365" y="457" fill="#cfcfcf">ONGOING</text>
+    <rect x="440" y="440" width="120" height="34" rx="17" fill="none" stroke="#FFD000"/><text x="500" y="457" fill="#FFD000">FINISHED</text>
+  </g>
+  <path class="l" d="M150 457H166" stroke-width="1.5"/>
+  <path class="l" d="M290 457H306" stroke-width="1.5"/>
+  <path class="l" d="M420 457H436" stroke-width="1.5"/>
+</svg>

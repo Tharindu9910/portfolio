@@ -2,6 +2,7 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { LAST_UPDATED } from '../constants'
 
 export default function Footer() {
   const ref = useRef(null)
@@ -48,6 +49,7 @@ export default function Footer() {
               letterSpacing: '0.02em',
             }}>
               © 2026. BUILT BY &lt;T<span className='text-[#FFD000]'>T</span>/&gt;.
+              <span style={{ marginLeft: '12px', color: '#6B6B6B' }}>LAST UPDATED: {LAST_UPDATED}</span>
             </span>
 
             <div className="footer-links" style={{ display: 'flex', gap: '32px' }}>

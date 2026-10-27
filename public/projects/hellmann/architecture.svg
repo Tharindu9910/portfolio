@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720" font-family="Inter, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#8a8a8a"/>
+    </marker>
+    <marker id="y" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#FFD000"/>
+    </marker>
+    <style>
+      .b{fill:#1a1a1a;stroke:#333;stroke-width:1.5}
+      .h{fill:#ffffff;font-size:17px;font-weight:700;letter-spacing:.04em}
+      .t{fill:#bdbdbd;font-size:14px}
+      .k{fill:#8a8a8a;font-size:11px;font-weight:700;letter-spacing:.16em}
+      .l{stroke:#8a8a8a;stroke-width:2;fill:none}
+      .y{stroke:#FFD000;stroke-width:2;fill:none}
+    </style>
+  </defs>
+  <rect width="1280" height="720" fill="#111111"/>
+
+  <text x="40" y="56" fill="#FFD000" font-size="14" font-weight="700" letter-spacing=".18em">SYSTEM ARCHITECTURE</text>
+  <text x="40" y="80" class="k">EVENT-SOURCED · CONFIG-DRIVEN WORKFLOW</text>
+
+  <!-- Clients -->
+  <text x="40" y="140" class="k">CLIENTS · REACT + TYPESCRIPT</text>
+  <rect class="b" x="40" y="156" width="270" height="74" rx="10"/>
+  <text class="h" x="60" y="188">Tablet operator screens</text><text class="t" x="60" y="212">queue → finished · hold · rollback</text>
+  <rect class="b" x="40" y="250" width="270" height="74" rx="10"/>
+  <text class="h" x="60" y="282">Desktop control &amp; reports</text><text class="t" x="60" y="306">bulk actions · CSV / Excel export</text>
+  <rect class="b" x="40" y="344" width="270" height="74" rx="10"/>
+  <text class="h" x="60" y="376">Overhead TV boards</text><text class="t" x="60" y="400">live per-team status</text>
+
+  <!-- Client <-> API -->
+  <path class="l" d="M314 230H436" marker-start="url(#a)" marker-end="url(#a)"/>
+  <text x="375" y="220" class="k" text-anchor="middle">REST</text>
+  <path class="y" d="M436 330H314" stroke-dasharray="6 5" marker-end="url(#y)"/>
+  <text x="375" y="320" fill="#FFD000" font-size="11" font-weight="700" letter-spacing=".12em" text-anchor="middle">WS PING</text>
+  <text x="375" y="352" class="t" font-size="12" text-anchor="middle">→ re-fetch</text>
+
+  <!-- YAML -->
+  <rect x="440" y="30" width="340" height="70" rx="10" fill="#1a1a1a" stroke="#FFD000" stroke-width="1.5" stroke-dasharray="6 5"/>
+  <text class="h" x="460" y="60">workflow.yaml</text>
+  <text class="t" x="460" y="84">11 stages · routing · preconditions · escalation</text>
+  <path class="y" d="M610 100V136" marker-end="url(#y)"/>
+
+  <!-- API -->
+  <rect x="440" y="140" width="340" height="290" rx="12" fill="#1c1c1c" stroke="#FFD000" stroke-width="2"/>
+  <text x="460" y="178" class="k" style="fill:#FFD000">API SERVICE</text>
+  <text class="h" x="460" y="206" font-size="22">FastAPI · async</text>
+  <g class="t">
+    <text x="460" y="246">▸ Workflow engine (versioned)</text>
+    <text x="460" y="276">▸ Safe precondition evaluator</text>
+    <text x="460" y="306">▸ Projections rebuilt from events</text>
+    <text x="460" y="336">▸ JWT · role gates · tenant scope</text>
+    <text x="460" y="366">▸ Idempotent spreadsheet ingest</text>
+    <text x="460" y="396">▸ REST + WebSocket</text>
+  </g>
+
+  <!-- DB -->
+  <path class="l" d="M610 434V516" marker-start="url(#a)" marker-end="url(#a)"/>
+  <text x="624" y="480" class="k">APPEND / REPLAY</text>
+  <rect class="b" x="440" y="520" width="340" height="110" rx="12"/>
+  <text x="460" y="556" class="k">DATA</text>
+  <text class="h" x="460" y="584" font-size="20">PostgreSQL</text>
+  <text class="t" x="460" y="610">append-only events · releases · audit</text>
+
+  <!-- Queue / worker / integration -->
+  <rect class="b" x="900" y="140" width="340" height="70" rx="10"/>
+  <text class="h" x="920" y="171">RabbitMQ</text><text class="t" x="920" y="194">async jobs &amp; notifications</text>
+  <path class="l" d="M784 175H896" marker-end="url(#a)"/>
+
+  <rect class="b" x="900" y="250" width="340" height="70" rx="10"/>
+  <text x="920" y="278" class="k">WORKER</text><text class="t" x="920" y="302">queue consumer · background tasks</text>
+  <path class="l" d="M1070 210V246" marker-end="url(#a)"/>
+
+  <rect class="b" x="900" y="360" width="340" height="70" rx="10"/>
+  <text x="920" y="388" class="k">INTEGRATION SERVICE</text><text class="t" x="920" y="412">the only service with internet egress</text>
+  <path class="l" d="M1070 320V356" marker-end="url(#a)"/>
+
+  <!-- External -->
+  <text x="900" y="500" class="k">EXTERNAL</text>
+  <rect class="b" x="900" y="516" width="160" height="60" rx="10"/>
+  <text class="t" x="980" y="551" text-anchor="middle">SMS gateway</text>
+  <rect class="b" x="1080" y="516" width="160" height="60" rx="10"/>
+  <text class="t" x="1160" y="543" text-anchor="middle">Floor scales</text>
+  <text class="t" x="1160" y="563" font-size="12" text-anchor="middle">weight webhook</text>
+  <path class="l" d="M980 434V512" marker-end="url(#a)"/>
+  <path class="y" d="M1160 512V434" marker-end="url(#y)"/>
+  <path class="l" d="M900 395H836V300H784" marker-end="url(#a)"/>
+
+  <!-- Platform -->
+  <rect x="20" y="650" width="1240" height="50" rx="10" fill="none" stroke="#2c2c2c" stroke-dasharray="4 6"/>
+  <text x="640" y="680" class="k" text-anchor="middle">DOCKER · GOOGLE CLOUD RUN · MANAGED POSTGRESQL · STRUCTURED LOGGING</text>
+</svg>

@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720" font-family="Inter, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#8a8a8a"/>
+    </marker>
+    <marker id="y" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#FFD000"/>
+    </marker>
+    <style>
+      .b{fill:#1a1a1a;stroke:#333;stroke-width:1.5}
+      .h{fill:#ffffff;font-size:16px;font-weight:700;letter-spacing:.02em}
+      .t{fill:#bdbdbd;font-size:13px}
+      .k{fill:#8a8a8a;font-size:11px;font-weight:700;letter-spacing:.16em}
+      .l{stroke:#8a8a8a;stroke-width:2;fill:none}
+      .y{stroke:#FFD000;stroke-width:2;fill:none}
+    </style>
+  </defs>
+  <rect width="1280" height="720" fill="#111111"/>
+
+  <text x="40" y="56" fill="#FFD000" font-size="14" font-weight="700" letter-spacing=".18em">SYSTEM ARCHITECTURE</text>
+  <text x="40" y="80" class="k">AUDIO NEVER TOUCHES THE SERVER</text>
+
+  <!-- Browser -->
+  <rect x="40" y="110" width="620" height="540" rx="14" fill="none" stroke="#2c2c2c" stroke-width="1.5"/>
+  <text x="64" y="142" class="k">BROWSER · REACT + TYPESCRIPT</text>
+
+  <rect class="b" x="64" y="166" width="270" height="70" rx="10"/>
+  <text class="h" x="84" y="196">Mic capture</text><text class="t" x="84" y="218">16 kHz PCM chunks</text>
+  <rect class="b" x="366" y="166" width="270" height="70" rx="10"/>
+  <text class="h" x="386" y="196">Playback scheduler</text><text class="t" x="386" y="218">gapless 24 kHz · Web Audio</text>
+
+  <rect class="b" x="64" y="282" width="270" height="70" rx="10"/>
+  <text class="h" x="84" y="312">Analysis worker</text><text class="t" x="84" y="334">FFT · features · ahead of playback</text>
+  <rect x="366" y="282" width="270" height="70" rx="10" fill="#1c1c1c" stroke="#FFD000" stroke-width="2"/>
+  <text class="h" x="386" y="312">Facial engine · 60 Hz</text><text class="t" x="386" y="334">lip-sync · emotion · gaze · blink</text>
+
+  <rect class="b" x="64" y="398" width="270" height="70" rx="10"/>
+  <text class="h" x="84" y="428">Debug bus · 20 Hz</text><text class="t" x="84" y="450">React reads, never on hot path</text>
+  <rect class="b" x="366" y="398" width="270" height="70" rx="10"/>
+  <text class="h" x="386" y="428">three.js renderer</text><text class="t" x="386" y="450">morph targets · bones · avatar adapter</text>
+
+  <path class="l" d="M501 236V278" marker-end="url(#a)"/>
+  <path class="l" d="M501 236V250H199V278" marker-end="url(#a)"/>
+  <path class="l" d="M334 317H362" marker-end="url(#a)"/>
+  <path class="l" d="M501 352V394" marker-end="url(#a)"/>
+  <path d="M366 330H350V433H338" stroke="#555" stroke-width="1.5" fill="none" stroke-dasharray="4 4" marker-end="url(#a)"/>
+
+  <rect x="64" y="514" width="572" height="110" rx="10" fill="none" stroke="#2c2c2c" stroke-dasharray="4 6"/>
+  <text x="84" y="546" class="k">DELIVERY</text>
+  <text class="t" x="84" y="572">Static SPA on a Firebase Hosting CDN, immutable cached assets</text>
+  <text class="t" x="84" y="596">Optimized GLB avatar · /api routed to Cloud Run</text>
+
+  <!-- Gemini -->
+  <rect x="820" y="110" width="420" height="110" rx="12" fill="#1c1c1c" stroke="#FFD000" stroke-width="2"/>
+  <text x="844" y="142" class="k" style="fill:#FFD000">MODEL</text>
+  <text class="h" x="844" y="170" font-size="20">Gemini Live API</text>
+  <text class="t" x="844" y="196">speech in · speech + transcripts + usage out</text>
+  <path class="y" d="M664 190H816" marker-start="url(#y)" marker-end="url(#y)"/>
+  <text x="740" y="178" fill="#FFD000" font-size="11" font-weight="700" letter-spacing=".1em" text-anchor="middle">DIRECT WS</text>
+  <text x="740" y="210" class="t" font-size="12" text-anchor="middle">audio both ways</text>
+
+  <!-- Backend -->
+  <rect class="b" x="820" y="290" width="420" height="270" rx="12"/>
+  <text x="844" y="322" class="k">BACKEND · FASTAPI ON CLOUD RUN</text>
+  <g class="t">
+    <text x="844" y="354">▸ Ephemeral tokens · single-use, config locked</text>
+    <text x="844" y="382">▸ Versioned prompts · admin console</text>
+    <text x="844" y="410">▸ API keys · origin allowlist · quotas</text>
+    <text x="844" y="438">▸ Transcripts &amp; metrics · 202 + batch writer</text>
+    <text x="844" y="466">▸ Per-turn cost from real usage data</text>
+    <text x="844" y="494">▸ Director WS → LLM · emotion &amp; gaze cues</text>
+    <text x="844" y="522">▸ Grapheme-to-phoneme · IPA</text>
+  </g>
+  <path class="l" d="M1030 290V224" marker-end="url(#a)"/>
+  <text x="1042" y="262" class="k">MINT TOKEN</text>
+  <path class="l" d="M664 425H816" marker-start="url(#a)" marker-end="url(#a)"/>
+  <text x="740" y="413" class="k" text-anchor="middle">TOKEN · IPA</text>
+  <text x="740" y="447" class="t" font-size="12" text-anchor="middle">cues · async ingest</text>
+
+  <!-- DB -->
+  <path class="l" d="M1030 560V596" marker-end="url(#a)"/>
+  <rect class="b" x="820" y="600" width="420" height="50" rx="10"/>
+  <text class="h" x="844" y="631">PostgreSQL</text>
+  <text class="t" x="964" y="631">prompts · keys · turns · cost</text>
+</svg>

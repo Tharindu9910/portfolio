@@ -3,36 +3,202 @@
  * Add a new object to this array to create a new project page.
  */
 
+// Update this whenever the site content changes — shown in the footer.
+export const LAST_UPDATED = "OCT 2026";
+
 export const PROJECTS = [
   {
-    id: "epitoni",
+    id: "hellmann-wms",
     caseNumber: 1,
+    title: "<accent>HELLMANN</accent> WAREHOUSE WORKFLOW PLATFORM",
+    shortTitle: "Hellmann Workflow",
+    status: "In Rollout · Phase 1",
+    tagline:
+      "An event-sourced workflow platform that tracks every purchase order through 11 stages across 9 operational teams of a third-party logistics warehouse, replacing spreadsheet coordination and verbal hand-offs with live tablet, desktop and overhead-screen workflows",
+    role: "Software Engineer (Team Member)",
+    timeline: "2026 — Phased rollout in progress",
+    techStack: ["Python", "FastAPI", "SQLAlchemy (async)", "PostgreSQL", "React", "TypeScript", "WebSockets", "RabbitMQ", "Docker", "Cloud Run"],
+    heroImage: {
+      src: "/projects/hellmann/workflow.svg",
+      alt: "Purchase order workflow across warehouse teams",
+    },
+    architecture: {
+      body: [
+        "Before the platform, nobody could see where a purchase order sat on the floor: picks were confirmed verbally, hand-offs happened between shifts by word of mouth and routing was worked out by hand from a shared spreadsheet. The platform gives each of the 9 teams the same lifecycle — <accent>Queue → Accepted → Ongoing → Finished</accent> — on tablet operator screens, desktop control panels, overhead TV boards and reports, all updated live over WebSockets.",
+        "The backend is split into three services: a FastAPI <accent>api</accent> that runs the workflow engine and serves REST and WebSocket traffic, a <accent>worker</accent> that consumes RabbitMQ for notifications and background jobs, and an <accent>integration</accent> service that is the only component allowed to reach the internet. State is <accent>event-sourced</accent>: nothing is updated in place, every action is appended to an events table in PostgreSQL and current state is rebuilt by replaying it. The 11 stages, their routing rules, preconditions and escalations live in a versioned <accent>YAML workflow definition</accent>, so changing the process is a config change, not a code change.",
+      ],
+    },
+    rollout: [
+      { title: "Requirements & prototype", body: "Operational pain points — no live PO visibility, verbal hand-offs, manual routing — turned into system requirements and a screen-by-screen prototype.", state: "done" },
+      { title: "Core engine & 9 team workflows", body: "Event store, YAML workflow engine, per-team screens, dashboards and reports.", state: "done" },
+      { title: "Test deployment with client IT", body: "Cloud Run test environment validated against real operational data.", state: "done" },
+      { title: "Phase 1 — live alongside Excel", body: "Early teams run their work in the platform while the legacy spreadsheet process continues in parallel.", state: "current" },
+      { title: "UAT & full cutover", body: "Acceptance testing, then retiring the spreadsheet process team by team.", state: "planned" },
+      { title: "Phase 2 — WMS integration", body: "Direct integration with the warehouse management system and further client workflows on the same engine.", state: "planned" },
+    ],
+    rolloutNote: "Running live with early teams while the legacy spreadsheet process continues in parallel.",
+    techinical_decisions: {
+      body: [
+        "<accent>Partial releases.</accent> The unit that moves through the floor is a release of a purchase order, not the order itself, and the PO status is a rollup over its releases. One order can be in Pick, Split and Loading at the same time — the way the warehouse really works.",
+        "<accent>Undo by appending, never deleting.</accent> Reversing a bad planning upload writes compensating events instead of UPDATE or DELETE, and a test asserts it. If the floor has already started the work, undo raises a reconciliation task instead of silently rewriting history.",
+        "<accent>Idempotent spreadsheet ingest.</accent> During the parallel run, planning data still arrives as spreadsheets. Uploads are keyed by file hash, so a re-upload never creates duplicate work.",
+        "<accent>Ping, then re-fetch.</accent> The server pushes a lightweight \"changed\" signal over WebSockets and screens re-fetch with debouncing, rather than streaming full payloads — keeping dozens of tablets and TV boards consistent with one source of truth. Workflow preconditions run through a whitelisted expression evaluator, never eval.",
+      ],
+      image: {
+        src: "/projects/hellmann/architecture.svg",
+        alt: "System architecture: React clients, FastAPI api service, PostgreSQL event store, RabbitMQ worker and integration service",
+      },
+    },
+    contributions: [
+      { title: "Requirements gathering", body: "Took part in requirements and planning meetings, translating operational pain points into system requirements." },
+      { title: "Tablet operator screens", body: "React and TypeScript screens taking work from queue to finished, with hold and rollback." },
+      { title: "Bulk actions & reports", body: "Bulk actions with live progress, and a reports page with CSV and Excel export." },
+      { title: "API & queries", body: "FastAPI endpoints and PostgreSQL queries behind dashboards and reports, covered by automated backend tests." },
+      { title: "Carton weight verification", body: "A FastAPI webhook service validating scale scans against per-carton baselines within a configurable tolerance — atomic, out-of-order-safe writes feeding live bay screens, quarantine for unregistered scales, config changes without redeploys, an offline test suite and a CLI simulator, on Cloud Run with structured logging." },
+      { title: "Live team-card counts", body: "Live per-team counts on the operations console, refreshed by WebSocket pings with no polling, a per-user cache and no stale numbers — handling StrictMode double-mounts, hidden tabs and request coalescing." },
+    ],
+    gallery: [],
+    challenges: [
+      {
+        num: "01",
+        title: "Running Beside the Old Process",
+        body: "The platform goes live team by team while spreadsheets keep running. Idempotent uploads, reversible undo and reconciliation tasks keep both worlds consistent, so a team can adopt it without the rest of the floor changing how it works.",
+      },
+      {
+        num: "02",
+        title: "Live Screens Under Load",
+        body: "A live dashboard exhausted the database connection pool during testing. A lighter endpoint, a short shared replay cache, a fallback poll and a warm minimum instance took median response from 4.4s to 0.09s.",
+      },
+      {
+        num: "03",
+        title: "Out-of-Order Scale Data",
+        body: "Floor scales post weights over webhooks with no ordering guarantee. Writes are atomic and order-safe, and scans from unknown scales are quarantined rather than dropped — no data loss, no wrong reading on a bay screen.",
+      },
+    ],
+    challengeImage: {
+      src: "/projects/hellmann/workflow.svg",
+      alt: "Purchase order workflow across warehouse teams with supervisor escalation",
+    },
+    metrics: [
+      { value: "11", label: "Workflow Stages" },
+      { value: "9", label: "Operational Teams" },
+      { value: "<1s", label: "Live Update Target" },
+    ],
+  },
+  {
+    id: "lumina",
+    caseNumber: 2,
+    title: "<accent>VOICE AI</accent> & FACIAL ENGINE",
+    shortTitle: "Lumina Voice & Face",
+    tagline:
+      "The real-time voice agent and facial animation engine I built as one component of Lumina, a larger client platform. Users just talk, in any of 97 languages, and a 3D avatar answers with live lip-sync, emotion and gaze driven by the AI's streaming speech.",
+    role: "Software Engineer — Voice Agent & Facial Engine (Lumina)",
+    timeline: "2026",
+    techStack: ["TypeScript", "React", "three.js", "Web Audio API", "Web Workers", "Gemini Live API", "Python", "FastAPI", "SQLModel", "PostgreSQL", "Cloud Run", "Firebase Hosting"],
+    heroImage: {
+      src: "/projects/lumina/card.svg",
+      alt: "Audio waveform turning into facial animation channels",
+    },
+    architecture: {
+      body: [
+        "Every design choice starts from <accent>latency</accent>. Audio streams directly between the browser and the <accent>Gemini Live API</accent> with no server relay — relaying would have added roughly 280ms to every turn. The FastAPI backend only mints <accent>short-lived, single-use ephemeral tokens</accent> with the session configuration locked server-side, so the browser can talk to the model but cannot change who the model is. Nothing on the voice path is ever awaited, and a cold start can only ever land on the token request, never mid-conversation.",
+        "Around that hot path the backend does the operational work: <accent>versioned prompts</accent> with an admin console (edit, history, restore), hashed API keys with origin allowlists and per-minute and monthly quotas, a transcript and metrics ingest that answers 202 immediately and is written in batches by a background writer, and <accent>per-turn cost tracking</accent> priced from the provider's real usage data. A WebSocket side channel streams the rolling transcript to a lightweight \"director\" model that returns affect and gaze cues for the face.",
+      ],
+    },
+    techinical_decisions: {
+      body: [
+        "<accent>Phoneme-anchored lip-sync.</accent> Text supplies which sound is spoken; audio supplies when. Server-side grapheme-to-phoneme produces IPA phones, and a duration-explicit semi-Markov Viterbi forced aligner places them on the streaming audio. If alignment fails the engine degrades gracefully — acoustic-only, then neutral — instead of freezing the mouth.",
+        "<accent>A mixer, not layers fighting each other.</accent> No layer writes final values. Lip-sync, emotion, gaze, blink and idle each contribute to 167 facial channels, and per-channel policies (additive-clamped, reflex-max, speech-dominant) resolve conflicts before constraints and spring smoothing — so a smile never breaks a lip closure.",
+        "<accent>Avatar independence.</accent> The engine contains no three.js and no avatar-specific code. It talks to an AvatarAdapter contract, runs headless in Node, and every tunable lives in calibration data — a new character needs an adapter and a calibration file, not an engine change.",
+        "<accent>Real-time discipline.</accent> The engine runs at 60Hz with zero per-frame allocation (preallocated typed arrays, dirty masks). Timing is sampled from the audio clock, not accumulated frame time, so the mouth never drifts from the voice. The debug UI reads a shared bus at 20Hz, keeping React off the hot path entirely.",
+      ],
+      image: {
+        src: "/projects/lumina/architecture.svg",
+        alt: "Architecture: browser streams audio directly to the Gemini Live API; FastAPI backend issues ephemeral tokens and handles prompts, keys, quotas, transcripts and cost",
+      },
+    },
+    contributionsTitle: "Engineering Range",
+    contributions: [
+      { title: "Real-Time Audio & DSP", body: "16kHz PCM capture, gapless 24kHz playback scheduling, FFT feature extraction in a Web Worker ahead of playback, and VAD turn-taking tuned against latency budgets." },
+      { title: "Speech & Linguistics", body: "IPA phonemization, a viseme taxonomy, coarticulation modelling with per-viseme resistance, and a forced aligner that works on streaming speech in any language." },
+      { title: "3D Graphics & Animation", body: "three.js morph targets and bone routing, plus GLB tooling that inventories a rig, measures mouth and eye geometry in millimetres, and shrinks the model from 142 MiB to ~17 MB." },
+      { title: "AI Integration", body: "Gemini Live API sessions with ephemeral tokens, a secondary director model for affect and gaze, context compression for long conversations, and latency-first configuration." },
+      { title: "Backend & Data", body: "FastAPI and SQLModel services: prompt versioning with an admin UI, API keys and quotas, and a non-blocking transcript and metrics pipeline on PostgreSQL." },
+      { title: "Cloud & Cost", body: "Cloud Run and a Firebase Hosting CDN with secrets in Secret Manager, and per-turn cost reconciliation against the provider's billing data." },
+    ],
+    galleryCaptions: true,
+    gallery: [
+      {
+        src: "/projects/lumina/aperture-timeline.png",
+        alt: "Chart of rendered mouth aperture over a session, with agent speaking turns highlighted",
+        title: "Diagnosing Lip-Sync From Rendered Frames",
+        caption: "Mouth aperture measured from rendered video, turn by turn.",
+        fit: "contain",
+      },
+      {
+        src: "/projects/lumina/modulation-spectrum.png",
+        alt: "Modulation spectrum of mouth movement compared with the syllabic band",
+        title: "Modulation Spectrum vs. Syllabic Band",
+        caption: "Movement peaked near 1Hz — far below the 4–6Hz rhythm of speech.",
+        fit: "contain",
+      },
+    ],
+    challenges: [
+      {
+        num: "01",
+        title: "The Mouth Wasn't Speaking",
+        body: "An early lip-sync looked busy but wrong. Measuring mouth aperture from rendered frames showed movement peaking around 1Hz while syllables arrive at 4–6Hz. That finding drove the rebuild around phoneme anchoring and coarticulation.",
+      },
+      {
+        num: "02",
+        title: "Interruptions Mid-Word",
+        body: "When a user cuts in, audio playback, the viseme timeline and the five-state conversation machine all reset together, so the avatar stops speaking mid-word and visibly starts listening instead of mouthing words that were never played.",
+      },
+      {
+        num: "03",
+        title: "Animation State Bugs",
+        body: "The three.js animation mixer snapped the rig back to a T-pose between clips — fixed by posing it at the clip's first keyframe before playback. A state-machine fall-through made the avatar look away mid-sentence; gaze is now driven explicitly per conversation state.",
+      },
+    ],
+    challengeImage: {
+      src: "/projects/lumina/engine.svg",
+      alt: "Facial performance engine pipeline from audio and transcript to avatar adapter",
+    },
+    metrics: [
+      { value: "97", label: "Languages" },
+      { value: "60Hz", label: "Facial Performance" },
+      { value: "~280ms", label: "Saved per Turn" },
+    ],
+  },
+  {
+    id: "epitoni",
+    caseNumber: 3,
     title: "<accent>EPITONI</accent> SAAS PLATFORM",
     shortTitle: "Epitoni SaaS",
     tagline:
-      "A cloud-native microservices platform bridging consumers and businesses through AI-powered personalization, real-time promotions, and multi-channel engagement — built for scale with a secure, enterprise-grade backend",
-    role: "Full Stack Engineer",
-    timeline: "15 Months (2024-2025)",
-    techStack: ["React", "Flask", "Neo4j", "Firestore", "GCP", "Auth2"],
+      "A serverless customer-engagement platform that lets local businesses publish promotions, run loyalty programs and reach opted-in customers — matched by interest through a Neo4j graph of tags",
+    role: "Full Stack Developer (Primary Engineer)",
+    timeline: "14 Months (Aug 2024 - Sep 2025)",
+    techStack: ["React", "Redux Toolkit", "Python", "Cloud Functions", "API Gateway", "Firestore", "Neo4j", "Firebase Auth"],
     heroImage: {
       src: "https://images.unsplash.com/photo-1639322537228-f710d846310a?w=1400&q=80",
       alt: "Abstract 3D network nodes with glowing gold paths on dark background",
     },
     architecture: {
       body: [
-        "The core engine was architected using a <accent>Microservices pattern</accent>. Each functional domain—Identity, Data Orchestration, and Visualization—was encapsulated within its own Flask backend, allowing for independent scaling and deployment.",
-        "We leveraged <accent>Neo4j</accent> for managing complex, non-linear relationships between enterprise data entities, while <accent>Firestore</accent> served as our high-performance document store for real-time dashboard updates and collaboration.",
+        "Epitoni is fully <accent>serverless</accent> on Google Cloud. A React business portal and a customer mobile app call a single <accent>API Gateway</accent> (OpenAPI 2.0 with Firebase JWT auth), which routes to 77 small Python Cloud Functions grouped by domain — auth, promotions, credits, loyalty, groups, get-notified, check-ins, interest graph and messaging — each deployed and scaled independently.",
+        "Persistence is polyglot: <accent>Firestore</accent> holds transactional data split across 11 domain databases, while <accent>Neo4j Aura</accent> holds the interest graph that drives targeting. Functions also call each other — a promotion push calls the Credits service to check and deduct its fee, and OTP validation calls the graph service to create the new user's node.",
       ],
     },
     techinical_decisions: {
       body: [
-        `Epitoni's personalization depends on a follow graph. A relational approach would require expensive multi-join queries to answer "what promotions are relevant to this user right now?" — Neo4j makes it a single Cypher traversal.`,
-        `Main node types: (:User), (:Business), and (:Promotion).`,
-        `Main relationships: FOLLOWS, LOCKED, and POSTED.`,
-        `Only relationship-critical data lives in the graph. Full profiles and analytics stay in Firestore — keeping queries fast and the schema focused.`,
+        `Epitoni's targeting depends on an interest graph. Businesses, promotions and customers are tagged (malls, hobbies, shopping preferences) and linked in Neo4j, so "which offers are relevant to this user?" is a single Cypher traversal instead of an expensive multi-join query.`,
+        `Main node types: (:User), (:Business), (:Promotion) and (:Tag). Main relationships: FOLLOWS, LOCKED, POSTED and tag links.`,
+        `Graph writes are idempotent — tags and relationships use Cypher MERGE, so repeated calls never duplicate nodes or edges. A user's graph node is created as soon as their OTP sign-up is validated.`,
+        `Only relationship-critical data lives in the graph. Profiles, promotions, loyalty points and logs stay in Firestore — keeping queries fast and the schema focused.`,
       ],
       image: {
-        src: "/projects/epitoni/graph.jpg",
+        src: "/projects/epitoni/neo4j-graph.png",
         alt: "Graph database visualization with interconnected nodes and relationships",
       },
     },
@@ -40,75 +206,75 @@ export const PROJECTS = [
     gallery: [
       {
         src: "/projects/epitoni/login.avif",
-        alt: "Real-time analytics dashboard showing metrics",
-        title: "Real-time Analytics Dashboard",
-        caption: "Unified telemetry and performance visualization engine.",
+        alt: "Epitoni business portal sign-in screen",
+        title: "Business Portal Sign-In",
+        caption: "Email and Google sign-in backed by Firebase Authentication.",
       },
       {
         src: "/projects/epitoni/home.png",
-        alt: "Microservices management console interface",
-        title: "Microservices Management Console",
-        caption: "Orchestration interface for distributed service clusters.",
+        alt: "Epitoni business portal home page",
+        title: "Business Portal Home",
+        caption: "Entry point to register businesses, manage listings and create customer groups.",
       },
       {
         src: "/projects/epitoni/businessList.png",
-        alt: "Data relationship mapper visualization",
-        title: "Data Relationship Mapper",
-        caption: "Visualizing non-linear entity connections in Neo4j.",
+        alt: "Grid of registered businesses with status badges",
+        title: "Business Listings",
+        caption: "All businesses an owner manages, with active and suspended status.",
       },
       {
-        src: "/projects/epitoni/businessinfo.png",
-        alt: "Enterprise settings and configuration interface",
-        title: "Global Identity Manager",
-        caption: "Centralized access control and user permissioning module.",
+        src: "/projects/epitoni/businessInfo.png",
+        alt: "Business profile with promotion credits and promotions",
+        title: "Promotions & Credits",
+        caption: "General, personalized and spontaneous promos, paid for with pay-per-push credits.",
       },
       {
         src: "/projects/epitoni/dashboard1.png",
-        alt: "Real-time analytics dashboard showing metrics",
-        title: "Real-time Analytics Dashboard",
-        caption: "Unified telemetry and performance visualization engine.",
+        alt: "Analytics dashboard with donut charts for promotion engagement",
+        title: "Analytics Dashboard",
+        caption: "Promotion locks, clicks and referral sources visualized with Nivo charts.",
       },
       {
         src: "/projects/epitoni/dashboard2.png",
-        alt: "Real-time analytics dashboard showing metrics",
-        title: "Real-time Analytics Dashboard",
-        caption: "Unified telemetry and performance visualization engine.",
+        alt: "Line charts of follower growth and business clicks over time",
+        title: "Growth Trends",
+        caption: "Follower growth and business clicks tracked over time.",
       },
       {
         src: "/projects/epitoni/api1.png",
-        alt: "Microservices management console interface",
-        title: "Microservices Management Console",
-        caption: "Orchestration interface for distributed service clusters.",
+        alt: "Loyalty points API console with secret keys",
+        title: "Loyalty Points API",
+        caption: "Businesses manage API secrets and add or redeem customer points from their own systems.",
       },
       {
         src: "/projects/epitoni/api2.avif",
-        alt: "Data relationship mapper visualization",
-        title: "Data Relationship Mapper",
-        caption: "Visualizing non-linear entity connections in Neo4j.",
+        alt: "Add Points API request and JSON response",
+        title: "Try the API",
+        caption: "Interactive console to send EARN requests and inspect the JSON response.",
       },
       {
         src: "/projects/epitoni/api3.png",
-        alt: "Enterprise settings and configuration interface",
-        title: "Global Identity Manager",
-        caption: "Centralized access control and user permissioning module.",
+        alt: "Add Points API usage guide",
+        title: "API Guide",
+        caption: "Plain-language guide to required inputs and returned transaction data.",
       },
       {
         src: "/projects/epitoni/api4.jpg",
-        alt: "Enterprise settings and configuration interface",
-        title: "Global Identity Manager",
-        caption: "Centralized access control and user permissioning module.",
+        alt: "Add Points API reference with endpoint, headers and JWT payload",
+        title: "API Reference",
+        caption: "Endpoint, headers and JWT payload for authenticated Cloud Function calls.",
       },
     ],
     challenges: [
       {
         num: "01",
-        title: "Distributed Consistency",
-        body: "Maintaining transactional integrity across distributed Flask services required implementing a sophisticated Saga pattern, ensuring data stayed synchronized between Neo4j and our metadata caches.",
+        title: "Service-to-Service Billing",
+        body: "Every promotion push had to be paid for. The push service calls the Credits service to check the business's balance and deduct its fee, handling FREE versus paid credit types and returning clear errors when the balance is insufficient.",
       },
       {
         num: "02",
-        title: "Graph Query Optimization",
-        body: "Complex deep-path queries in Neo4j were initially causing high latency. We optimized Cypher queries and slashed response times by 30%.",
+        title: "Consistency Across 77 Functions",
+        body: "Each function verifies the Firebase token, validates input with Pydantic models that reject unknown fields, raises typed errors and writes structured Cloud Logging. That common code was copied into each function — a shared package and a CI/CD pipeline are the next step.",
       },
     ],
     challengeImage: {
@@ -116,15 +282,15 @@ export const PROJECTS = [
       alt: "Complex data structures with glowing network architecture",
     },
     metrics: [
-      { value: "99.9%", label: "Uptime SLA Maintained" },
-      { value: "30%", label: "Query Latency Reduction" },
-      { value: "120+", label: "Microservices on GCP" },
+      { value: "77", label: "Serverless Cloud Functions" },
+      { value: "11", label: "Firestore Databases" },
+      { value: "~50K", label: "Lines of Code Shipped" },
     ],
   },
 
   {
     id: "neo-ji-agentic-ai",
-    caseNumber: 2,
+    caseNumber: 4,
     title: "<accent>NEO-JI</accent> AGENTIC AI",
     shortTitle: "Agentic AI",
     tagline:
@@ -202,7 +368,7 @@ export const PROJECTS = [
 
   {
     id: "realtime-messaging-mqtt",
-    caseNumber: 3,
+    caseNumber: 5,
     title: "<accent>Real-Time</accent> Messaging System",
     shortTitle: "MQTT Chat Backend",
     tagline:
@@ -295,7 +461,7 @@ export const PROJECTS = [
   },
   {
     id: "sliit-attendance-system",
-    caseNumber: 4,
+    caseNumber: 6,
     title: "<accent>Real-Time</accent> Attendance Management System",
     shortTitle: "Attendance System",
     tagline:
@@ -354,7 +520,7 @@ export const PROJECTS = [
       },
     ],
     challengeImage: {
-      src: "/projects/sliit-attendance/challenges.png",
+      src: "",
       alt: "Attendance scenario classification logic diagram",
     },
     metrics: [
@@ -382,6 +548,60 @@ export const PROJECTS = [
         description:
           "Next.js App Router pages including real-time dashboard, simulation module, and comprehensive analytics reports",
       },
+    ],
+  },
+
+  {
+    id: "saniro-erp",
+    caseNumber: 7,
+    title: "<accent>SANIRO</accent> MULTI-BRANCH ERP",
+    shortTitle: "Saniro ERP",
+    tagline:
+      "A custom ERP for a three-branch steel fabrication and roofing business. It replaced paper job cards with one system for orders, payments, branch stock and the workshop floor, so every sheet of steel and every hour of labour is tracked and billed correctly.",
+    role: "Full Stack Engineer (Two-Engineer Team)",
+    timeline: "3 Months (Aug 2026 - Oct 2026)",
+    techStack: ["TypeScript", "NestJS", "PostgreSQL", "TypeORM", "React 19", "TanStack Query", "TanStack Router", "Zod", "SSE", "pg-boss", "Playwright", "Turborepo"],
+    heroImage: {
+      src: "https://images.unsplash.com/photo-1639322537228-f710d846310a?w=1400&q=80",
+      alt: "Abstract network nodes on dark background",
+    },
+    architecture: {
+      body: [
+        "Saniro ERP is a <accent>TypeScript monorepo</accent> (pnpm workspaces + Turborepo) with a <accent>NestJS</accent> API, a <accent>React 19</accent> web app and a shared contract package. The shared package holds every enum, Zod schema, order state machine and error code, so the API and the UI can never drift apart.",
+        "The API is split into 16 domain modules (job cards, roofing orders, payments, ledger, inventory, stock transfers, price list, gate passes, workers, permissions and more) over a <accent>PostgreSQL</accent> schema of 37 tables. Each module follows controller, service and repository layers. Every input is validated with Zod at the boundary and every failure returns a stable error code.",
+        "A job card (the customer's order) holds many <accent>work orders</accent>, one per operation: cut, bend, pipe bending, sheet rolling or coil cutting. Each work order carries its measurements in a JSONB spec block and is priced from a central rate table. A line with no matching rate becomes a customized job that a supervisor prices by hand.",
+        "Seven roles, from cashier and supervisor to head-office auditor, see screens filtered to their branch and permissions. Queues update live over <accent>Server-Sent Events</accent>, and background jobs run on <accent>pg-boss</accent> inside Postgres, so PostgreSQL is the only infrastructure the system needs.",
+      ],
+    },
+    techinical_decisions: {
+      body: [
+        `<accent>One database, no Redis.</accent> Background jobs use pg-boss in Postgres, live updates are in-process SSE and caching is in memory. For a business of this size that removes a whole class of moving parts while still meeting the under-3-second queue refresh target.`,
+        `<accent>Money is integers, and the ledger is append-only.</accent> All amounts are stored as cents. A payment and its ledger entry are written in one transaction, and only the LedgerService may write to the ledger. A job card cannot close until its balance due is exactly zero.`,
+        `<accent>Branch isolation is enforced on the server.</accent> The branch is never taken from the request body; it comes from the user's role. Head-office roles can read every branch, but any write they attempt on branch work is refused with a 403. Watching and transacting stay separate.`,
+        `<accent>Concurrency is handled in the data layer.</accent> Every write sends the record's version (optimistic locking), create calls carry a client request ID so retries never create duplicates, and the database itself checks that stock can never go below zero.`,
+      ],
+    },
+    gallery: [],
+    challenges: [
+      {
+        num: "01",
+        title: "Stock Promised Twice",
+        body: "Stock was only checked when work started, so two paid orders could count on the same sheets. We added a reservation layer that holds stock as soon as an order is saved (available = on hand − reserved) and consumes the hold when the line starts. Shortages need an audited branch override. A backfill script and an integrity check (reserved = sum of open holds) moved existing orders over safely.",
+      },
+      {
+        num: "02",
+        title: "Rules That Disagreed",
+        body: "The approved prototype, the data model and the PRD's 26 business rules conflicted in several places, such as whether unpaid orders could reach the workshop. Each conflict was resolved with the product owner and written up as a numbered decision record, so both engineers built on the same rules and the reasoning is still there for whoever maintains the system next.",
+      },
+    ],
+    challengeImage: {
+      src: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=900&q=80",
+      alt: "Complex data structures with glowing network architecture",
+    },
+    metrics: [
+      { value: "26", label: "Business Rules Enforced" },
+      { value: "310+", label: "Automated API & E2E Tests" },
+      { value: "79", label: "REST Endpoints Across 16 Modules" },
     ],
   },
 ];

@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" width="1200" height="520" font-family="Inter, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#8a8a8a"/></marker>
+    <marker id="y" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#FFD000"/></marker>
+    <style>
+      .k{fill:#8a8a8a;font-size:12px;font-weight:700;letter-spacing:.16em}
+      .c{fill:#1a1a1a;stroke:#333;stroke-width:1.5}
+      .p{fill:#e8e8e8;font-size:20px;font-weight:600;text-anchor:middle;dominant-baseline:central}
+      .v{fill:#bdbdbd;font-size:11px;font-weight:600;letter-spacing:.08em;text-anchor:middle;dominant-baseline:central}
+    </style>
+  </defs>
+  <rect width="1200" height="520" fill="#111111"/>
+  <text x="40" y="58" fill="#FFD000" font-size="14" font-weight="700" letter-spacing=".18em">SPEECH → FACE, IN REAL TIME</text>
+  <text x="40" y="82" class="k">STREAMING AUDIO · PHONEMES · 167 CHANNELS · 60 HZ</text>
+
+  <text x="40" y="160" class="k">AI VOICE STREAM</text>
+  <g>
+    <rect x="40" y="276.5" width="4" height="27.0" rx="2" fill="#8a8a8a"/>
+    <rect x="49" y="256.6" width="4" height="66.8" rx="2" fill="#8a8a8a"/>
+    <rect x="58" y="261.8" width="4" height="56.4" rx="2" fill="#8a8a8a"/>
+    <rect x="67" y="241.1" width="4" height="97.9" rx="2" fill="#8a8a8a"/>
+    <rect x="76" y="245.3" width="4" height="89.3" rx="2" fill="#8a8a8a"/>
+    <rect x="85" y="232.2" width="4" height="115.6" rx="2" fill="#8a8a8a"/>
+    <rect x="94" y="231.5" width="4" height="117.0" rx="2" fill="#8a8a8a"/>
+    <rect x="103" y="232.3" width="4" height="115.5" rx="2" fill="#8a8a8a"/>
+    <rect x="112" y="224.7" width="4" height="130.6" rx="2" fill="#8a8a8a"/>
+    <rect x="121" y="240.7" width="4" height="98.6" rx="2" fill="#8a8a8a"/>
+    <rect x="130" y="227.5" width="4" height="125.1" rx="2" fill="#8a8a8a"/>
+    <rect x="139" y="254.3" width="4" height="71.4" rx="2" fill="#8a8a8a"/>
+    <rect x="148" y="239.4" width="4" height="101.2" rx="2" fill="#8a8a8a"/>
+    <rect x="157" y="264.7" width="4" height="50.7" rx="2" fill="#8a8a8a"/>
+    <rect x="166" y="257.1" width="4" height="65.8" rx="2" fill="#8a8a8a"/>
+    <rect x="175" y="272.3" width="4" height="35.4" rx="2" fill="#8a8a8a"/>
+    <rect x="184" y="258.1" width="4" height="63.9" rx="2" fill="#8a8a8a"/>
+    <rect x="193" y="255.8" width="4" height="68.3" rx="2" fill="#8a8a8a"/>
+    <rect x="202" y="246.9" width="4" height="86.3" rx="2" fill="#8a8a8a"/>
+    <rect x="211" y="240.7" width="4" height="98.6" rx="2" fill="#8a8a8a"/>
+    <rect x="220" y="243.5" width="4" height="93.0" rx="2" fill="#8a8a8a"/>
+    <rect x="229" y="231.1" width="4" height="117.8" rx="2" fill="#8a8a8a"/>
+    <rect x="238" y="247.7" width="4" height="84.6" rx="2" fill="#8a8a8a"/>
+    <rect x="247" y="229.6" width="4" height="120.8" rx="2" fill="#8a8a8a"/>
+    <rect x="256" y="257.0" width="4" height="66.0" rx="2" fill="#8a8a8a"/>
+    <rect x="265" y="236.2" width="4" height="107.6" rx="2" fill="#8a8a8a"/>
+    <rect x="274" y="258.5" width="4" height="63.1" rx="2" fill="#8a8a8a"/>
+    <rect x="283" y="248.3" width="4" height="83.3" rx="2" fill="#8a8a8a"/>
+    <rect x="292" y="262.4" width="4" height="55.2" rx="2" fill="#8a8a8a"/>
+    <rect x="301" y="262.3" width="4" height="55.4" rx="2" fill="#8a8a8a"/>
+    <rect x="310" y="268.7" width="4" height="42.5" rx="2" fill="#8a8a8a"/>
+    <rect x="319" y="264.3" width="4" height="51.4" rx="2" fill="#8a8a8a"/>
+    <rect x="328" y="257.3" width="4" height="65.4" rx="2" fill="#8a8a8a"/>
+    <rect x="337" y="260.9" width="4" height="58.3" rx="2" fill="#8a8a8a"/>
+    <rect x="346" y="249.1" width="4" height="81.9" rx="2" fill="#8a8a8a"/>
+  </g>
+  <path d="M370 290H416" stroke="#8a8a8a" stroke-width="2" marker-end="url(#a)"/>
+
+  <text x="430" y="160" class="k">PHONEMES → VISEMES</text>
+  <g>
+    <rect class="c" x="430" y="200" width="70" height="52" rx="8"/><text class="p" x="465" y="226">h</text>
+    <rect class="c" x="510" y="200" width="70" height="52" rx="8"/><text class="p" x="545" y="226">ɛ</text>
+    <rect class="c" x="590" y="200" width="70" height="52" rx="8"/><text class="p" x="625" y="226">l</text>
+    <rect class="c" x="670" y="200" width="90" height="52" rx="8"/><text class="p" x="715" y="226">oʊ</text>
+    <rect x="430" y="300" width="70" height="40" rx="6" fill="#262626"/><text class="v" x="465" y="320">OPEN</text>
+    <rect x="510" y="292" width="70" height="56" rx="6" fill="#2e2e2e"/><text class="v" x="545" y="320">WIDE</text>
+    <rect x="590" y="306" width="70" height="28" rx="6" fill="#262626"/><text class="v" x="625" y="320">TIGHT</text>
+    <rect x="670" y="296" width="90" height="48" rx="6" fill="#FFD000"/><text class="v" x="715" y="320" style="fill:#111">TIGHT-O</text>
+    <path d="M465 252V292M545 252V288M625 252V302M715 252V292" stroke="#444" stroke-width="1.5" stroke-dasharray="3 4"/>
+    <text x="430" y="384" fill="#6f6f6f" font-size="12" letter-spacing=".08em">forced alignment · coarticulation</text>
+  </g>
+  <path d="M770 290H816" stroke="#8a8a8a" stroke-width="2" marker-end="url(#a)"/>
+
+  <text x="830" y="160" class="k">CHANNEL MIXER</text>
+  <g font-size="11" font-weight="700" letter-spacing=".14em" fill="#bdbdbd">
+    <text x="830" y="206">LIP-SYNC</text><rect x="940" y="196" width="220" height="12" rx="6" fill="#222"/><rect x="940" y="196" width="190" height="12" rx="6" fill="#FFD000"/>
+    <text x="830" y="246">EMOTION</text><rect x="940" y="236" width="220" height="12" rx="6" fill="#222"/><rect x="940" y="236" width="120" height="12" rx="6" fill="#8a8a8a"/>
+    <text x="830" y="286">GAZE</text><rect x="940" y="276" width="220" height="12" rx="6" fill="#222"/><rect x="940" y="276" width="80" height="12" rx="6" fill="#8a8a8a"/>
+    <text x="830" y="326">BLINK</text><rect x="940" y="316" width="220" height="12" rx="6" fill="#222"/><rect x="940" y="316" width="40" height="12" rx="6" fill="#8a8a8a"/>
+  </g>
+  <path d="M1050 340V396" stroke="#FFD000" stroke-width="2" marker-end="url(#y)"/>
+  <rect x="940" y="400" width="220" height="56" rx="28" fill="#FFD000"/>
+  <text x="1050" y="428" fill="#111" font-size="17" font-weight="700" text-anchor="middle" dominant-baseline="central" letter-spacing=".06em">60 HZ FACE</text>
+</svg>

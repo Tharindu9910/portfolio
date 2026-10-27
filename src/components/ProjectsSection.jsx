@@ -8,15 +8,36 @@ import Link from 'next/link'
 const projects = [
   {
     id: 1,
-    tabs: ['Flask','React','Microservices','Neo4J','Firebase','GCP', 'OAuth2'],
+    tabs: ['FastAPI', 'React', 'TypeScript', 'PostgreSQL', 'WebSockets', 'Event Sourcing'],
+    image: '/projects/hellmann/workflow.svg',
+    imageAlt: 'Purchase order workflow across warehouse teams',
+    badge: 'In Rollout · Phase 1',
+    title: 'Hellmann Warehouse Workflow Platform',
+    description:
+      'Event-sourced platform tracking purchase orders through 11 stages across 9 warehouse teams for a 3PL operation, replacing spreadsheet and verbal hand-offs with live tablet and overhead-screen workflows.',
+    linkText: 'VIEW CASE STUDY',
+  },
+  {
+    id: 2,
+    tabs: ['Gemini Live API', 'TypeScript', 'three.js', 'Web Audio', 'FastAPI', 'Cloud Run'],
+    image: '/projects/lumina/card.svg',
+    imageAlt: 'Audio waveform turning into facial animation channels',
+    title: 'Real-Time Voice AI & Facial Engine',
+    description:
+      'The voice and face component of the Lumina platform: a voice agent streaming audio browser-to-model in 97 languages, and a from-scratch, avatar-independent engine that turns live AI speech into 60 Hz lip-sync, emotion, gaze and blink.',
+    linkText: 'VIEW CASE STUDY',
+  },
+  {
+    id: 3,
+    tabs: ['React', 'Python', 'Serverless', 'Neo4J', 'Firestore', 'GCP', 'Firebase Auth'],
     showCode: false,
     image: '/projects/epitoni/epitoni-home.png',
     title: 'Epitoni',
     description:
-      'High-scale microservices featuring secure multi-model data orchestration, complex relationship modeling, and real-time analytics for enterprise performance.',
+      'Serverless engagement platform for local businesses: promotions, loyalty, groups and opt-in alerts, targeted through a Neo4j interest graph. 77 Python Cloud Functions behind API Gateway.',
     linkText: 'SYSTEM SPECS',
   },
-  { id:2,
+  { id:4,
     tabs: ['React', 'Flask', 'Microservices', 'GCP' , 'Websocket', 'Docker' ],
     image: '/projects/widget/neo-ji-home.png',
     imageAlt: 'Abstract 3D stacked layers architecture',
@@ -26,7 +47,7 @@ const projects = [
     linkText: 'VIEW CASE STUDY',
   },
   {
-    id:3,
+    id:5,
     tabs: ['Flask', 'GCP', "Linux", 'Docker', 'Cryptography'],
     image: '/projects/chat/chat-home.png',
     imageAlt: 'Network circuit visualization dark',
@@ -36,7 +57,7 @@ const projects = [
     linkText: 'ARCHITECTURE SPECS',
   },
   {
-    id:4,
+    id:6,
     tabs: ['FastAPI', 'Next.js', 'Webhook'],
     image: '/projects/attendance/attendance-mgt.png',
     imageAlt: 'Circular radar scan from space',
@@ -44,6 +65,16 @@ const projects = [
     description:
       'Real-Time Attendance Management System with Facial Recognition and Report Generation for Educational Institutions.',
     linkText: 'FULL BREAKDOWN',
+  },
+  {
+    id: 7,
+    tabs: ['NestJS', 'React', 'PostgreSQL', 'TypeScript', 'SSE', 'Playwright'],
+    image: 'https://images.unsplash.com/photo-1639322537228-f710d846310a?w=1400&q=80',
+    imageAlt: 'Abstract network nodes on dark background',
+    title: 'Saniro ERP',
+    description:
+      'Multi-branch ERP for a steel fabrication and roofing business: job cards, payments, branch stock and the workshop floor in one system, with 7 roles and 26 business rules enforced on the server.',
+    linkText: 'CASE STUDY',
   },
 ]
 

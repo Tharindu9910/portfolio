@@ -12,7 +12,7 @@ const PROJECTS = [
     description:
       "A modern, high-performance web platform designed for the agro industry, delivering a seamless user experience across all devices. The application focuses on fast load times with optimized media, smooth interactive scrolling, and clean, user-friendly navigation. Built with strong emphasis on performance, accessibility, and discoverability, it ensures efficient content delivery, responsive layouts, and reliable deployment. The project also integrates essential communication features and is structured to scale while maintaining speed and usability.",
     tags: ["NEXT.JS 15", "GSAP","FRAMER MOTION","TAILWINDCSS", "SEO", "FIGMA"],
-    videoSrc: "/smallProjects/project-Coir.webm",
+    videoSrc: "/smallProjects/project-agro.webm",
     url: "https://www.tharulagro.com/",
     align: "left",
     bg: "#0e0e0e",
@@ -20,15 +20,54 @@ const PROJECTS = [
   {
     id: "02",
     label: "PROJECT_02",
-    title: ["FUTURE", "BEVERAGES WEB"],
+    title: ["FUTURE", "BEVERAGES"],
     titleOutline: false,
     description:
-      "A cutting-edge web application for a futuristic beverage company, showcasing an immersive user experience with dynamic 3D product visualizations and interactive storytelling. The platform is built with a focus on performance and scalability, utilizing the latest web technologies to create a visually stunning and engaging online presence.",
-    tags: ["NEXT.JS 14", "THREE.JS", "GSAP","TAILWINDCSS"],
-    videoSrc: "/smallProjects/project-cbf.webm",
+      "A fast, fully static website for Ceylon Future Beverages, a Sri Lankan company turning native botanicals into functional drinks. Floating 3D cans move with the scroll and a 3D carousel rotates through each flavour, all drawn on one shared WebGL canvas that stays smooth on mid-range phones. Every product page is generated from a single content source, with a mixed-pack builder that pre-fills the enquiry form. The whole site is served as static files from GoDaddy hosting, and still ships with structured data, a strict security policy and an evidence-rated page on gotu kola.",
+    tags: ["ASTRO 7", "THREE.JS", "GSAP", "TAILWINDCSS 4", "TYPESCRIPT", "SEO"],
+    videoSrc: "/smallProjects/project-beverages.webm",
     align: "right",
-    url: "",
+    url: "https://www.ceylonfuturebeverages.com/",
     bg: "#131313",
+  },
+  {
+    id: "03",
+    label: "PROJECT_03",
+    title: ["STREET", "& SEAM"],
+    titleOutline: true,
+    description:
+      "A custom Shopify storefront for a streetwear brand, built on the Dawn theme with no frameworks, packages or build step. Seven new merchant-editable sections, bottom-sheet menus and filters and a dual-handle price slider make the store feel native on a phone. The brand was taken through PayHere's merchant application, with the store's policies and pages prepared to pass its review, and the gateway was then connected to Shopify checkout for local payments. Custom domain setup and a Theme Editor training package for staff completed the hand-off.",
+    tags: ["SHOPIFY", "LIQUID", "JAVASCRIPT", "CSS", "PLAYWRIGHT", "PAYHERE"],
+    videoSrc: "/smallProjects/project-sns.webm",
+    url: "",
+    align: "left",
+    bg: "#0e0e0e",
+  },
+  {
+    id: "04",
+    label: "PROJECT_04",
+    title: ["NEX", "ONE"],
+    titleOutline: false,
+    description:
+      "A marketing website for NexOne, an ERP for distributors, wholesalers and multi-outlet retailers that connects orders, stock, warehousing, dispatch and invoicing in one system. The static Astro build pairs scroll-driven GSAP motion with lightweight React islands for the platform explorer, industry tabs and contact form, plus dedicated pages for each ERP module. Animations adapt to Save-Data and slow connections, and hover-based prefetching keeps navigation instant.",
+    tags: ["ASTRO 7", "REACT 19", "GSAP", "TAILWINDCSS 4", "TYPESCRIPT", "SEO"],
+    videoSrc: "/smallProjects/project-nex.webm",
+    url: "",
+    align: "right",
+    bg: "#131313",
+  },
+  {
+    id: "05",
+    label: "PROJECT_05",
+    title: ["ILMA", "OGA"],
+    titleOutline: true,
+    description:
+      "The website and content platform for the ILMA International Old Girls' Association, a not-for-profit alumni network. Projects, events, overseas chapters, blogs, membership and sports are all managed through a Sanity Studio embedded in the site, with live content updates and draft previews. Built on Next.js 16 with Cache Components, the site is server-rendered by default with fully typed GROQ queries and smooth motion-driven reveals.",
+    tags: ["NEXT.JS 16", "SANITY CMS", "TYPESCRIPT", "MOTION", "TAILWINDCSS 4"],
+    videoSrc: "/smallProjects/project-illma.webm",
+    url: "",
+    align: "left",
+    bg: "#0e0e0e",
   },
 //   {
 //     id: "03",
@@ -148,7 +187,7 @@ function ProjectVideo({ src }) {
       onClick={isMobile ? handleTap : undefined}
       style={{
         width: "100%",
-        aspectRatio: "2/1",
+        aspectRatio: "1264/720",
         borderRadius: 2,
         overflow: "hidden",
         position: "relative",
@@ -195,10 +234,9 @@ function ProjectVideo({ src }) {
         style={{
           width: "100%",
           height: "100%",
-          objectFit: "cover",
+          objectFit: "contain",
           display: "block",
-          transition: "transform .55s cubic-bezier(.16,1,.3,1), filter .4s ease",
-          transform: playing ? "scale(1.04)" : "scale(1)",
+          transition: "filter .4s ease",
           filter: playing ? "brightness(1)" : "brightness(0.55)",
         }}
       />
@@ -290,9 +328,11 @@ function ProjectSection({ project }) {
         }}>
           {project.tags.map(t => <Chip key={t} label={t} />)}
         </div>
-        <div style={{ display: "flex", justifyContent: isLeft ? "flex-start" : "flex-end" }}>
-          <CTABtn href ={project?.url}>GO TO LIVE DEPLOYMENT</CTABtn>
-        </div>
+        {project.url && (
+          <div style={{ display: "flex", justifyContent: isLeft ? "flex-start" : "flex-end" }}>
+            <CTABtn href={project.url}>GO TO LIVE DEPLOYMENT</CTABtn>
+          </div>
+        )}
       </FadeUp>
     </div>
   );

@@ -11,34 +11,38 @@ const STACK = [
   {
     icon: '▣',
     label: 'FRONTEND',
-    items: ['React / Next.js', 'TypeScript', 'Tailwind CSS', 'Redux / Zustand' , "Flutter"],
+    items: ['React / Next.js', 'TypeScript', 'Tailwind CSS', 'Redux / Zustand', 'Astro', 'Three.js', 'Flutter / Riverpod'],
   },
   {
     icon: '■',
     label: 'BACKEND',
-    items: ['Python / Node.js', 'Flask / FastAPI / Django', 'PostgreSQL', 'MongoDB / Firestore', 'Neo4J'],
+    items: ['Python / Node.js / Express', 'Flask / FastAPI / Django', 'NestJS', 'PostgreSQL / MySQL', 'MongoDB / Firestore', 'Neo4J / Elasticsearch', 'RAG / LLMs / FAISS', 'Gemini Live API'],
   },
   {
     icon: '☁',
     label: 'CLOUD',
-    items: ['GCP / AWS Ecosystems', 'Serverless Arch'],
+    items: ['GCP / AWS / Azure', 'Serverless Arch'],
   },
   {
     icon: '⊞',
     label: 'INFRASTRUCTURE',
-    items: ['CI/CD Pipelines', 'Docker' ],
+    items: ['CI/CD Pipelines', 'Docker', 'Linux', 'WebSockets / MQTT / Webhooks', 'OAuth 2.0 / E2EE'],
   },
 ]
 
 const EXPERIENCE = [
   {
     period: 'AUG 2024 — PRESENT',
-    role: 'Full-Stack Developer',
-    company: 'EBridge Solutions',
+    role: 'Software Engineer',
+    company: 'E-Bridge Solutions',
+    companyUrl: 'https://ebridge.lk/',
     summary:
-      '',
+      'Delivered software for local businesses in logistics and manufacturing, handling everything from on-site requirements gathering to architecture, implementation and deployment.',
     achievements: [
-      'Designed and developed scalable backend services serving 500+ active users with sub-100ms response times',
+      'Built a real-time voice AI companion on the Google Gemini Live API, streaming audio directly between browser and model to cut per-turn latency by ~280ms',
+      'Designed a from-scratch, avatar-independent facial animation engine (TypeScript, three.js) that lip-syncs a 3D avatar to streaming AI speech in real time',
+      'Implemented FastAPI endpoints and PostgreSQL queries behind dashboards and reports for an event-sourced warehouse workflow platform (11 stages, 9 operational teams), with automated backend tests and real-time WebSocket updates',
+      'Designed and developed scalable backend services using Python, Flask, Neo4j, and Firestore, serving 500+ active users with sub-100ms response times',
       'Improved data retrieval throughput by ~40% through optimized REST APIs and database queries',
       'Developed graph-based data models using Neo4j and Cypher for complex relational data',
       'Implemented secure authentication using JWT, RBAC, and bcrypt password hashing',
@@ -48,13 +52,14 @@ const EXPERIENCE = [
     ],
   },
   {
-    period: 'FEB 2024 — AUG 2021',
+    period: 'FEB 2024 — AUG 2024',
     role: 'Junior Software Engineer',
-    company: 'EBridge Solutions',
+    company: 'E-Bridge Solutions',
+    companyUrl: 'https://ebridge.lk/',
     summary:
       'Contributed to frontend and mobile application development, delivering production-ready features in an agile environment.',
     achievements: [
-      'Developed responsive frontend applications using React.js and Next.js with consistent feature delivery',
+      'Developed responsive frontend applications using React.js and Next.js, delivering 5+ production features per sprint',
       'Built cross-platform mobile modules using Flutter and Riverpod',
       'Actively participated in agile processes including daily scrums and sprint planning',
     ],
@@ -192,7 +197,7 @@ export default function ResumePage() {
                 fontSize:'clamp(13px,1.5vw,15.5px)', color:'#777',
                 lineHeight:1.7, maxWidth:'420px',
               }}>
-                Full-Stack Engineer crafting{' '}
+                Software Engineer crafting{' '}
                 <strong style={{ color:'#DDD', fontWeight:600 }}>
                   high-concurrency distributed systems
                 </strong>{' '}
@@ -301,7 +306,13 @@ export default function ResumePage() {
                       fontSize:'clamp(17px,2vw,23px)',
                       color:'#FFF', lineHeight:1.2, marginBottom:'7px',
                     }}>{exp.role}</h3>
-                    <p style={{ ...label10, color:'#878686' }}>{exp.company}</p>
+                    <a href={exp.companyUrl} target="_blank" rel="noopener noreferrer" style={{
+                      ...label10, color:'#878686', textDecoration:'none',
+                      transition:'color 0.2s',
+                    }}
+                    onMouseEnter={e=>e.currentTarget.style.color='#FFD000'}
+                    onMouseLeave={e=>e.currentTarget.style.color='#878686'}
+                    >{exp.company} ↗</a>
                   </div>
 
                   {/* Right */}
@@ -315,7 +326,7 @@ export default function ResumePage() {
                         <div key={ai} style={{ display:'flex', gap:'16px', alignItems:'flex-start' }}>
                           <span style={{
                             ...label10, color:'#FFD000', minWidth:'18px', paddingTop:'2px',
-                          }}>0{ai + 1}</span>
+                          }}>{String(ai + 1).padStart(2, '0')}</span>
                           <p style={{
                             fontFamily:'Inter,sans-serif', fontSize:'13px',
                             color:'#757474', lineHeight:1.68,

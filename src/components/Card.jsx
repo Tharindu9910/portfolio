@@ -4,7 +4,7 @@ import TabPills from './TabPills'
 import { ArrowUpRightIcon } from 'lucide-react'
 
 
-export default function Card({ tabs, image, imageAlt, showCode, title, description, linkText }) {
+export default function Card({ tabs, image, imageAlt, showCode, title, description, linkText, badge }) {
   return (
     <div className="card" style={{ height: '100%' }}>
       {/* Tabs */}
@@ -36,6 +36,25 @@ export default function Card({ tabs, image, imageAlt, showCode, title, descripti
             position: 'absolute', inset: 0,
             background: 'linear-gradient(to bottom, rgba(24,24,24,0.1) 30%, rgba(24,24,24,0.9) 100%)',
           }} />
+          {badge && (
+            <span style={{
+              position: 'absolute', top: '14px', left: '14px',
+              display: 'inline-flex', alignItems: 'center', gap: '8px',
+              padding: '6px 12px',
+              borderRadius: '999px',
+              border: '1px solid #FFD000',
+              background: 'rgba(17,17,17,0.85)',
+              color: '#FFD000',
+              fontFamily: 'Inter, sans-serif',
+              fontSize: '10px',
+              fontWeight: 600,
+              letterSpacing: '0.12em',
+              textTransform: 'uppercase',
+            }}>
+              <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#FFD000' }} />
+              {badge}
+            </span>
+          )}
         </div>
       )}
 

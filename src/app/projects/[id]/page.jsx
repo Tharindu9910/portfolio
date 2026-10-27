@@ -193,6 +193,15 @@ export default function ProjectPage({ params }) {
         .nav-links { display: flex; }
         .challenge-grid { display: grid; grid-template-columns: 1fr 1fr; }
         .challenge-img-wrap { position: relative;overflow: hidden;min-height: 320px }
+        .contrib-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+        .pp-live-dot { width: 6px; height: 6px; border-radius: 50%; background: #fabd00; flex-shrink: 0; animation: pp-pulse 1.8s ease-out infinite; }
+        .pp-live-dot-lg { width: 12px; height: 12px; margin-top: 6px; }
+        @keyframes pp-pulse {
+          0%   { box-shadow: 0 0 0 0 rgba(250,189,0,0.55); }
+          100% { box-shadow: 0 0 0 10px rgba(250,189,0,0); }
+        }
+        @media (prefers-reduced-motion: reduce) { .pp-live-dot { animation: none; } }
 
         @media (max-width: 960px) {
           .pp-wrap    { padding: 0 28px; }
@@ -214,6 +223,7 @@ export default function ProjectPage({ params }) {
           .meta-grid  { grid-template-columns: 1fr; }
           .meta-grid > div:last-child { grid-column: span 1; }
           .gallery-grid { grid-template-columns: 1fr; }
+          .contrib-grid { grid-template-columns: 1fr; }
           .metrics-grid { grid-template-columns: 1fr; }
           .footer-links-grid { grid-template-columns: 1fr; gap: 16px; }
           .nav-links { display: none !important; }
@@ -244,11 +254,26 @@ export default function ProjectPage({ params }) {
             {/* ══ HERO ══════════════════════════════════════════ */}
             <header style={{ marginBottom: '96px' }}>
               <div style={{ marginBottom: '64px' }}>
-                <span className="pp-label" style={{
-                  fontFamily: font.label, fontSize: '13px', fontWeight: 500,
-                  letterSpacing: '0.2em', color: C.primary,
-                  textTransform: 'uppercase', display: 'block', marginBottom: '16px',
-                }}>Case Study / {id}</span>
+                <div className="pp-label" style={{
+                  display: 'flex', alignItems: 'center', flexWrap: 'wrap',
+                  gap: '16px', marginBottom: '16px',
+                }}>
+                  <span style={{
+                    fontFamily: font.label, fontSize: '13px', fontWeight: 500,
+                    letterSpacing: '0.2em', color: C.primary, textTransform: 'uppercase',
+                  }}>Case Study / {id}</span>
+                  {project.status && (
+                    <span style={{
+                      ...label10, color: C.primary,
+                      border: `1px solid rgba(250,189,0,0.4)`, borderRadius: '999px',
+                      padding: '5px 12px',
+                      display: 'inline-flex', alignItems: 'center', gap: '8px',
+                    }}>
+                      <span className="pp-live-dot" />
+                      {project.status}
+                    </span>
+                  )}
+                </div>
 
                 <h1 className="pp-h1" style={{
 
@@ -371,6 +396,63 @@ export default function ProjectPage({ params }) {
               </div>
             </section>
 
+            {/* ══ PHASED ROLLOUT ═════════════════════════════════ */}
+            {project.rollout?.length > 0 && <section className="pp-reveal arch-grid" style={{ marginBottom: '128px' }}>
+              <div className="arch-sticky" style={{ position: 'sticky', top: '112px' }}>
+                <h2 style={{
+                  fontFamily: font.head, fontWeight: 700, fontSize: '36px',
+                  letterSpacing: '-0.03em', textTransform: 'uppercase', color: C.text,
+                }}>PHASED<br />ROLLOUT</h2>
+                <div style={{ width: '48px', height: '4px', background: C.primary, marginTop: '16px' }} />
+                {project.rolloutNote && (
+                  <p style={{
+                    fontFamily: font.body, fontSize: '15px', color: C.muted,
+                    lineHeight: 1.7, marginTop: '24px', maxWidth: '320px',
+                  }}>{project.rolloutNote}</p>
+                )}
+              </div>
+
+              <ol style={{ listStyle: 'none', background: C.bgCard, padding: 'clamp(24px,4vw,40px)' }}>
+                {project.rollout.map((step, i) => {
+                  const last = i === project.rollout.length - 1
+                  const done = step.state === 'done'
+                  const current = step.state === 'current'
+                  return (
+                    <li key={step.title} style={{ display: 'grid', gridTemplateColumns: '24px 1fr', gap: '20px' }}>
+                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <span
+                          className={current ? 'pp-live-dot pp-live-dot-lg' : undefined}
+                          style={current ? undefined : {
+                            width: '12px', height: '12px', borderRadius: '50%', marginTop: '6px', flexShrink: 0,
+                            background: done ? C.primary : 'transparent',
+                            border: `2px solid ${done ? C.primary : '#484848'}`,
+                          }}
+                        />
+                        {!last && <span style={{
+                          flex: 1, width: '2px', marginTop: '6px',
+                          background: done ? 'rgba(250,189,0,0.45)' : 'rgba(72,72,72,0.5)',
+                        }} />}
+                      </div>
+                      <div style={{ paddingBottom: last ? 0 : '28px' }}>
+                        <span style={{
+                          ...label10, display: 'block', marginBottom: '6px',
+                          color: current ? C.primary : done ? C.muted : '#666',
+                        }}>{current ? 'Now' : done ? 'Complete' : 'Planned'}</span>
+                        <h3 style={{
+                          fontFamily: font.head, fontWeight: 700, fontSize: '18px',
+                          letterSpacing: '-0.01em', textTransform: 'uppercase',
+                          color: step.state === 'planned' ? '#8a8a8a' : C.text, marginBottom: '6px',
+                        }}>{step.title}</h3>
+                        <p style={{ fontFamily: font.body, fontSize: '14px', color: C.muted, lineHeight: 1.7 }}>
+                          {step.body}
+                        </p>
+                      </div>
+                    </li>
+                  )
+                })}
+              </ol>
+            </section>}
+
             {/* ══ THE ARCHITECTURE ══════════════════════════════ */}
             <section
             className="arch-section"
@@ -391,28 +473,19 @@ export default function ProjectPage({ params }) {
                   display: 'flex', flexDirection: 'column', gap: '20px',
                 }}>
 
-                  <p
-                    style={{
-                      fontFamily: font.body,
-                      fontSize: '17px',
-                      color: C.muted,
-                      lineHeight: 1.75
-                    }}
-                  >
-                    {PROJECTS[index]?.techinical_decisions?.body?.map((paragraph, i) => (
-                      <p
-                        key={i}
-                        style={{
-                          fontFamily: font.body,
-                          fontSize: '17px',
-                          color: C.muted,
-                          lineHeight: 1.75
-                        }}
-                      >
-                        {formatText(paragraph)}
-                      </p>
-                    ))}
-                  </p>
+                  {PROJECTS[index]?.techinical_decisions?.body?.map((paragraph, i) => (
+                    <p
+                      key={i}
+                      style={{
+                        fontFamily: font.body,
+                        fontSize: '17px',
+                        color: C.muted,
+                        lineHeight: 1.75
+                      }}
+                    >
+                      {formatText(paragraph)}
+                    </p>
+                  ))}
 
                 </div>
 
@@ -430,10 +503,10 @@ export default function ProjectPage({ params }) {
                     style={{ objectFit: 'center', opacity: 1 }}
                     sizes="100vw"
                   />
-                  <div style={{
+                  {!PROJECTS[index]?.techinical_decisions?.image?.src?.endsWith('.svg') && <div style={{
                     position: 'absolute', inset: 0,
                     background: 'linear-gradient(to top, #0e0e0e 0%, transparent 20%)',
-                  }} />
+                  }} />}
                 </div>
 
 
@@ -449,6 +522,34 @@ export default function ProjectPage({ params }) {
                 <div style={{ width: '48px', height: '4px', background: C.primary, marginTop: '16px' }} />
               </div>
             </section>
+
+            {/* ══ MY CONTRIBUTIONS ═══════════════════════════════ */}
+            {project.contributions?.length > 0 && <section className="pp-reveal arch-grid" style={{ marginBottom: '128px', marginTop: '48px' }}>
+              <div className="arch-sticky" style={{ position: 'sticky', top: '112px' }}>
+                <h2 style={{
+                  fontFamily: font.head, fontWeight: 700, fontSize: '36px',
+                  letterSpacing: '-0.03em', textTransform: 'uppercase', color: C.text,
+                }}>{(project.contributionsTitle || 'My Contributions').split(' ').map((word, i) => (
+                  <span key={i}>{i > 0 && <br />}{word}</span>
+                ))}</h2>
+                <div style={{ width: '48px', height: '4px', background: C.primary, marginTop: '16px' }} />
+              </div>
+
+              <div className="contrib-grid">
+                {project.contributions.map((c, i) => (
+                  <div key={c.title} style={{ background: C.bgCard, padding: '32px' }}>
+                    <h3 style={{
+                      fontFamily: font.label, fontSize: '11px', fontWeight: 500,
+                      color: C.primary, letterSpacing: '0.18em', textTransform: 'uppercase',
+                      marginBottom: '10px',
+                    }}>{String(i + 1).padStart(2, '0')}. {c.title}</h3>
+                    <p style={{ fontFamily: font.body, fontSize: '14px', color: C.muted, lineHeight: 1.72 }}>
+                      {c.body}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </section>}
 
             {/* ══ INTERFACE GALLERY ══════════════════════════════ */}
             {gallery?.length>0 && <section className="pp-reveal" style={{ marginBottom: '128px' }}>
@@ -506,7 +607,7 @@ export default function ProjectPage({ params }) {
                     <div style={{
                       aspectRatio: '16/10',
                       overflow: 'hidden',
-                      background: C.bgHigh,
+                      background: img.fit === 'contain' ? '#f5f5f5' : C.bgHigh,
                       border: `1px solid ${C.borderFaint}`,
                       position: 'relative',
                     }}>
@@ -515,7 +616,8 @@ export default function ProjectPage({ params }) {
                         alt={img.alt}
                         fill
                         style={{
-                          objectFit: 'cover',
+                          objectFit: img.fit || 'cover',
+                          padding: img.fit === 'contain' ? '12px' : 0,
                           opacity: 0.8,
                           transition: 'filter 0.7s, opacity 0.7s',
                         }}
@@ -523,6 +625,19 @@ export default function ProjectPage({ params }) {
                         className="gallery-img"
                       />
                     </div>
+
+                    {project.galleryCaptions && img.caption && (
+                      <div>
+                        <h4 style={{
+                          fontFamily: font.head, fontSize: '15px', fontWeight: 700,
+                          letterSpacing: '-0.02em', textTransform: 'uppercase',
+                          color: C.text, marginBottom: '4px',
+                        }}>{img.title}</h4>
+                        <p style={{ fontFamily: font.body, fontSize: '14px', color: C.muted, lineHeight: 1.6 }}>
+                          {img.caption}
+                        </p>
+                      </div>
+                    )}
 
                     {/* <div>
           <h4 style={{
@@ -587,10 +702,12 @@ export default function ProjectPage({ params }) {
     {/* Right: image */}
     <div className="challenge-img-wrap">
       <Image
-        src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=900&q=80"
-        alt="Complex data structures with glowing network architecture"
+        src={project.challengeImage?.src || "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=900&q=80"}
+        alt={project.challengeImage?.alt || "Complex data structures with glowing network architecture"}
         fill
-        style={{ objectFit: 'cover', opacity: 0.45, transition: 'transform 0.7s' }}
+        style={project.challengeImage?.src?.endsWith('.svg')
+          ? { objectFit: 'contain', opacity: 0.9, padding: '24px', transition: 'transform 0.7s' }
+          : { objectFit: 'cover', opacity: 0.45, transition: 'transform 0.7s' }}
         sizes="(max-width: 900px) 100vw, 50vw"
         className="challenge-img"
       />

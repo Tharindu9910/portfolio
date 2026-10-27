@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" width="1200" height="720" font-family="Inter, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#8a8a8a"/>
+    </marker>
+    <marker id="y" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#FFD000"/>
+    </marker>
+    <style>
+      .b{fill:#1a1a1a;stroke:#333;stroke-width:1.5}
+      .h{fill:#ffffff;font-size:15px;font-weight:700}
+      .t{fill:#bdbdbd;font-size:12px}
+      .k{fill:#8a8a8a;font-size:11px;font-weight:700;letter-spacing:.16em}
+      .l{stroke:#8a8a8a;stroke-width:2;fill:none}
+    </style>
+  </defs>
+  <rect width="1200" height="720" fill="#111111"/>
+
+  <text x="40" y="50" fill="#FFD000" font-size="14" font-weight="700" letter-spacing=".18em">FACIAL PERFORMANCE ENGINE</text>
+  <text x="40" y="74" class="k">LAYERS CONTRIBUTE · THE MIXER DECIDES</text>
+
+  <!-- Speech lane -->
+  <text x="40" y="110" class="k">SPEECH</text>
+  <rect class="b" x="40" y="122" width="180" height="56" rx="10"/>
+  <text class="h" x="56" y="146">Scheduled audio</text><text class="t" x="56" y="166">exact play time</text>
+  <rect class="b" x="250" y="122" width="200" height="56" rx="10"/>
+  <text class="h" x="266" y="146">Acoustic analysis</text><text class="t" x="266" y="166">Web Worker · FFT</text>
+  <rect class="b" x="40" y="206" width="180" height="56" rx="10"/>
+  <text class="h" x="56" y="230">Transcript → IPA</text><text class="t" x="56" y="250">grapheme-to-phoneme</text>
+  <rect class="b" x="250" y="206" width="200" height="56" rx="10"/>
+  <text class="h" x="266" y="230">Forced aligner</text><text class="t" x="266" y="250">semi-Markov Viterbi</text>
+  <path class="l" d="M220 150H246" marker-end="url(#a)"/>
+  <path class="l" d="M220 234H246" marker-end="url(#a)"/>
+  <text x="250" y="284" class="t" fill="#777">fallback: acoustic-only → neutral</text>
+
+  <rect class="b" x="490" y="164" width="170" height="56" rx="10"/>
+  <text class="h" x="506" y="188">Viseme timeline</text><text class="t" x="506" y="208">audio-clock sampled</text>
+  <path class="l" d="M450 150H470V180H486" marker-end="url(#a)"/>
+  <path class="l" d="M450 234H470V204H486" marker-end="url(#a)"/>
+  <rect class="b" x="690" y="164" width="200" height="56" rx="10"/>
+  <text class="h" x="706" y="188">Coarticulation</text><text class="t" x="706" y="208">+ dominance stabilizer</text>
+  <path class="l" d="M660 192H686" marker-end="url(#a)"/>
+  <path class="l" d="M890 192H926" marker-end="url(#a)"/>
+
+  <!-- Affect lane -->
+  <text x="40" y="330" class="k">AFFECT</text>
+  <rect class="b" x="40" y="342" width="170" height="56" rx="10"/>
+  <text class="h" x="56" y="366">Lexical · Prosody</text><text class="t" x="56" y="386">words &amp; voice tone</text>
+  <rect x="230" y="342" width="220" height="56" rx="10" fill="#1c1c1c" stroke="#FFD000" stroke-width="1.5"/>
+  <text class="h" x="246" y="366">Director LLM</text><text class="t" x="246" y="386">transcript → emotion &amp; gaze</text>
+  <text x="440" y="337" fill="#FFD000" font-size="10" font-weight="700" letter-spacing=".12em" text-anchor="end">VIA WEBSOCKET</text>
+  <rect class="b" x="560" y="342" width="330" height="56" rx="10"/>
+  <text class="h" x="576" y="366">Intent fusion → Emotion state</text><text class="t" x="576" y="386">expression packs · micro-expressions</text>
+  <path d="M450 362H556" stroke="#FFD000" stroke-width="2" fill="none" marker-end="url(#y)"/>
+  <path class="l" d="M125 398V414H530V380H556" marker-end="url(#a)"/>
+  <path class="l" d="M890 370H926" marker-end="url(#a)"/>
+
+  <!-- Behaviour lane -->
+  <text x="40" y="440" class="k">BEHAVIOUR</text>
+  <rect class="b" x="40" y="452" width="410" height="56" rx="10"/>
+  <text class="h" x="56" y="476">Conversation state machine</text><text class="t" x="56" y="496">idle · listening · thinking · speaking · recovery</text>
+  <rect class="b" x="490" y="452" width="400" height="56" rx="10"/>
+  <text class="h" x="506" y="476">Blink · Gaze · Idle · Gesture</text><text class="t" x="506" y="496">saccades and glances that follow the conversation</text>
+  <path class="l" d="M450 480H486" marker-end="url(#a)"/>
+  <path class="l" d="M890 480H926" marker-end="url(#a)"/>
+
+  <!-- Mixer -->
+  <rect x="930" y="122" width="230" height="386" rx="12" fill="#1c1c1c" stroke="#FFD000" stroke-width="2"/>
+  <text x="950" y="156" class="k" style="fill:#FFD000">MIXER</text>
+  <text class="h" x="950" y="186" font-size="20">167 channels</text>
+  <g class="t" font-size="13">
+    <text x="950" y="232">▸ per-channel policies</text>
+    <text x="950" y="262">▸ additive-clamped</text>
+    <text x="950" y="292">▸ reflex-max</text>
+    <text x="950" y="322">▸ speech-dominant</text>
+    <text x="950" y="352">▸ constraints</text>
+    <text x="950" y="382">▸ spring smoothing</text>
+  </g>
+  <text x="950" y="470" fill="#FFD000" font-size="12" font-weight="700" letter-spacing=".08em">60 HZ · ZERO ALLOC</text>
+
+  <!-- Adapter -->
+  <path class="l" d="M1045 508V546" marker-end="url(#a)"/>
+  <rect x="930" y="550" width="230" height="60" rx="10" fill="#1a1a1a" stroke="#FFD000" stroke-width="1.5" stroke-dasharray="6 5"/>
+  <text class="h" x="950" y="576">AvatarAdapter</text><text class="t" x="950" y="596">the only avatar-aware contract</text>
+  <rect class="b" x="490" y="552" width="190" height="56" rx="10"/>
+  <text class="h" x="506" y="576">CC4 rig</text><text class="t" x="506" y="596">three.js · calibration data</text>
+  <rect class="b" x="700" y="552" width="190" height="56" rx="10"/>
+  <text class="h" x="716" y="576">Mock adapter</text><text class="t" x="716" y="596">headless Node</text>
+  <path d="M680 580H700M890 580H926" stroke="#555" stroke-width="1.5" stroke-dasharray="4 4" fill="none"/>
+  <text x="490" y="640" class="k">IMPLEMENTS</text>
+
+  <rect x="20" y="660" width="1160" height="44" rx="10" fill="none" stroke="#2c2c2c" stroke-dasharray="4 6"/>
+  <text x="600" y="687" class="k" text-anchor="middle">NO THREE.JS AND NO AVATAR NAMES INSIDE THE ENGINE · EVERY TUNABLE IN CALIBRATION DATA</text>
+</svg>
