@@ -47,7 +47,7 @@
 
   <rect x="64" y="514" width="572" height="110" rx="10" fill="none" stroke="#2c2c2c" stroke-dasharray="4 6"/>
   <text x="84" y="546" class="k">DELIVERY</text>
-  <text class="t" x="84" y="572">Static SPA on a Firebase Hosting CDN, immutable cached assets</text>
+  <text class="t" x="84" y="572">Static SPA, immutable cached assets</text>
   <text class="t" x="84" y="596">Optimized GLB avatar · /api routed to Cloud Run</text>
 
   <!-- Gemini -->

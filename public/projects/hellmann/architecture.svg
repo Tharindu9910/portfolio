@@ -39,7 +39,7 @@
   <!-- YAML -->
   <rect x="440" y="30" width="340" height="70" rx="10" fill="#1a1a1a" stroke="#FFD000" stroke-width="1.5" stroke-dasharray="6 5"/>
   <text class="h" x="460" y="60">workflow.yaml</text>
-  <text class="t" x="460" y="84">11 stages · routing · preconditions · escalation</text>
+  <text class="t" x="460" y="84">stages · routing · preconditions · escalation</text>
   <path class="y" d="M610 100V136" marker-end="url(#y)"/>
 
   <!-- API -->
@@ -86,8 +86,4 @@
   <path class="l" d="M980 434V512" marker-end="url(#a)"/>
   <path class="y" d="M1160 512V434" marker-end="url(#y)"/>
   <path class="l" d="M900 395H836V300H784" marker-end="url(#a)"/>
-
-  <!-- Platform -->
-  <rect x="20" y="650" width="1240" height="50" rx="10" fill="none" stroke="#2c2c2c" stroke-dasharray="4 6"/>
-  <text x="640" y="680" class="k" text-anchor="middle">DOCKER · GOOGLE CLOUD RUN · MANAGED POSTGRESQL · STRUCTURED LOGGING</text>
 </svg>

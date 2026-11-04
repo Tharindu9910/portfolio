@@ -11,10 +11,9 @@ const projects = [
     tabs: ['FastAPI', 'React', 'TypeScript', 'PostgreSQL', 'WebSockets', 'Event Sourcing'],
     image: '/projects/hellmann/workflow.svg',
     imageAlt: 'Purchase order workflow across warehouse teams',
-    badge: 'In Rollout · Phase 1',
     title: 'Hellmann Warehouse Workflow Platform',
     description:
-      'Event-sourced platform tracking purchase orders through 11 stages across 9 warehouse teams for a 3PL operation, replacing spreadsheet and verbal hand-offs with live tablet and overhead-screen workflows.',
+      'Event-sourced platform tracking purchase orders across every warehouse team of a 3PL operation, replacing Excel tracking and handwritten paper pick sheets with live tablet and overhead-screen workflows.',
     linkText: 'VIEW CASE STUDY',
   },
   {
@@ -71,9 +70,9 @@ const projects = [
     tabs: ['NestJS', 'React', 'PostgreSQL', 'TypeScript', 'SSE', 'Playwright'],
     image: 'https://images.unsplash.com/photo-1639322537228-f710d846310a?w=1400&q=80',
     imageAlt: 'Abstract network nodes on dark background',
-    title: 'Saniro ERP',
+    title: 'Saniro Operations Platform',
     description:
-      'Multi-branch ERP for a steel fabrication and roofing business: job cards, payments, branch stock and the workshop floor in one system, with 7 roles and 26 business rules enforced on the server.',
+      'Multi-branch operations platform for a steel fabrication and roofing business: workshop job cards, roofing orders, hardware sales, payments and branch stock in one system, with 7 roles and branch isolation enforced on the server. In progress.',
     linkText: 'CASE STUDY',
   },
 ]

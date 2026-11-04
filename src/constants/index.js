@@ -12,11 +12,10 @@ export const PROJECTS = [
     caseNumber: 1,
     title: "<accent>HELLMANN</accent> WAREHOUSE WORKFLOW PLATFORM",
     shortTitle: "Hellmann Workflow",
-    status: "In Rollout · Phase 1",
     tagline:
-      "An event-sourced workflow platform that tracks every purchase order through 11 stages across 9 operational teams of a third-party logistics warehouse, replacing spreadsheet coordination and verbal hand-offs with live tablet, desktop and overhead-screen workflows",
+      "An event-sourced workflow platform that tracks every purchase order through every stage of its journey across the operational teams of a third-party logistics warehouse, replacing Excel tracking, a partial in-house tool and printed pick sheets marked up by hand with live tablet, desktop and overhead-screen workflows",
     role: "Software Engineer (Team Member)",
-    timeline: "2026 — Phased rollout in progress",
+    timeline: "2026",
     techStack: ["Python", "FastAPI", "SQLAlchemy (async)", "PostgreSQL", "React", "TypeScript", "WebSockets", "RabbitMQ", "Docker", "Cloud Run"],
     heroImage: {
       src: "/projects/hellmann/workflow.svg",
@@ -24,19 +23,10 @@ export const PROJECTS = [
     },
     architecture: {
       body: [
-        "Before the platform, nobody could see where a purchase order sat on the floor: picks were confirmed verbally, hand-offs happened between shifts by word of mouth and routing was worked out by hand from a shared spreadsheet. The platform gives each of the 9 teams the same lifecycle — <accent>Queue → Accepted → Ongoing → Finished</accent> — on tablet operator screens, desktop control panels, overhead TV boards and reports, all updated live over WebSockets.",
-        "The backend is split into three services: a FastAPI <accent>api</accent> that runs the workflow engine and serves REST and WebSocket traffic, a <accent>worker</accent> that consumes RabbitMQ for notifications and background jobs, and an <accent>integration</accent> service that is the only component allowed to reach the internet. State is <accent>event-sourced</accent>: nothing is updated in place, every action is appended to an events table in PostgreSQL and current state is rebuilt by replaying it. The 11 stages, their routing rules, preconditions and escalations live in a versioned <accent>YAML workflow definition</accent>, so changing the process is a config change, not a code change.",
+        "Before the platform, the workflow was split across Excel spreadsheets, a small in-house system that covered only one part of the process, and printed pick sheets that operators marked up with a pen. No single place showed where a purchase order sat on the floor. The platform gives every team the same lifecycle — <accent>Queue → Accepted → Ongoing → Finished</accent> — on tablet operator screens, desktop control panels, overhead TV boards and reports, all updated live over WebSockets.",
+        "The backend is split into three services: a FastAPI <accent>api</accent> that runs the workflow engine and serves REST and WebSocket traffic, a <accent>worker</accent> that consumes RabbitMQ for notifications and background jobs, and an <accent>integration</accent> service that is the only component allowed to reach the internet. State is <accent>event-sourced</accent>: nothing is updated in place, every action is appended to an events table in PostgreSQL and current state is rebuilt by replaying it. The stages, their routing rules, preconditions and escalations live in a versioned <accent>YAML workflow definition</accent>, so changing the process is a config change, not a code change.",
       ],
     },
-    rollout: [
-      { title: "Requirements & prototype", body: "Operational pain points — no live PO visibility, verbal hand-offs, manual routing — turned into system requirements and a screen-by-screen prototype.", state: "done" },
-      { title: "Core engine & 9 team workflows", body: "Event store, YAML workflow engine, per-team screens, dashboards and reports.", state: "done" },
-      { title: "Test deployment with client IT", body: "Cloud Run test environment validated against real operational data.", state: "done" },
-      { title: "Phase 1 — live alongside Excel", body: "Early teams run their work in the platform while the legacy spreadsheet process continues in parallel.", state: "current" },
-      { title: "UAT & full cutover", body: "Acceptance testing, then retiring the spreadsheet process team by team.", state: "planned" },
-      { title: "Phase 2 — WMS integration", body: "Direct integration with the warehouse management system and further client workflows on the same engine.", state: "planned" },
-    ],
-    rolloutNote: "Running live with early teams while the legacy spreadsheet process continues in parallel.",
     techinical_decisions: {
       body: [
         "<accent>Partial releases.</accent> The unit that moves through the floor is a release of a purchase order, not the order itself, and the PO status is a rollup over its releases. One order can be in Pick, Split and Loading at the same time — the way the warehouse really works.",
@@ -51,11 +41,12 @@ export const PROJECTS = [
     },
     contributions: [
       { title: "Requirements gathering", body: "Took part in requirements and planning meetings, translating operational pain points into system requirements." },
-      { title: "Tablet operator screens", body: "React and TypeScript screens taking work from queue to finished, with hold and rollback." },
-      { title: "Bulk actions & reports", body: "Bulk actions with live progress, and a reports page with CSV and Excel export." },
-      { title: "API & queries", body: "FastAPI endpoints and PostgreSQL queries behind dashboards and reports, covered by automated backend tests." },
       { title: "Carton weight verification", body: "A FastAPI webhook service validating scale scans against per-carton baselines within a configurable tolerance — atomic, out-of-order-safe writes feeding live bay screens, quarantine for unregistered scales, config changes without redeploys, an offline test suite and a CLI simulator, on Cloud Run with structured logging." },
-      { title: "Live team-card counts", body: "Live per-team counts on the operations console, refreshed by WebSocket pings with no polling, a per-user cache and no stale numbers — handling StrictMode double-mounts, hidden tabs and request coalescing." },
+      { title: "Live bay screens", body: "React and TypeScript bay, carton-journey and history screens subscribed to Firebase RTDB against a 2-second scan-to-screen target, with the data layer isolated in one module so a future Azure move is a swap, not a rewrite." },
+      { title: "Tablet operator screens", body: "React and TypeScript screens taking work from queue to finished, with hold and rollback — plus an FCA result flow requiring server-validated auditors and a sample size, and a done-PO drawer with result tabs, batch search and CSV export." },
+      { title: "Bulk actions at floor scale", body: "Replaced a single 20–50s request that operators kept resubmitting with batches of 20, live progress, a single-run guard and a summary of every refused PO and why — while the backend replays each PO's state once instead of three times." },
+      { title: "Team reports & exports", body: "FastAPI and PostgreSQL reports in the floor's local timezone with date windows, completions counted once per release per day, a filterable completed-PO list with streamed CSV and Excel export, and a guard so a slow response never overwrites a newer one." },
+      { title: "Spreadsheet ingest integrity", body: "Fixed the planning-file parser to keep real availability over 0% duplicate snapshots and to read \"required/available\" size cells (910/910 rows), with a dry-run-first backfill script and a PO × upload readiness report with per-upload deltas and CSV export." },
     ],
     gallery: [],
     challenges: [
@@ -67,7 +58,7 @@ export const PROJECTS = [
       {
         num: "02",
         title: "Live Screens Under Load",
-        body: "A live dashboard exhausted the database connection pool during testing. A lighter endpoint, a short shared replay cache, a fallback poll and a warm minimum instance took median response from 4.4s to 0.09s.",
+        body: "Dozens of tablets and TV boards refresh at the same moment. A lighter endpoint, a short shared replay cache, a fallback poll and a warm minimum instance keep every screen responsive under peak floor activity.",
       },
       {
         num: "03",
@@ -80,9 +71,9 @@ export const PROJECTS = [
       alt: "Purchase order workflow across warehouse teams with supervisor escalation",
     },
     metrics: [
-      { value: "11", label: "Workflow Stages" },
-      { value: "9", label: "Operational Teams" },
       { value: "<1s", label: "Live Update Target" },
+      { value: "0", label: "Destructive Writes" },
+      { value: "1", label: "Source of Truth" },
     ],
   },
   {
@@ -94,7 +85,7 @@ export const PROJECTS = [
       "The real-time voice agent and facial animation engine I built as one component of Lumina, a larger client platform. Users just talk, in any of 97 languages, and a 3D avatar answers with live lip-sync, emotion and gaze driven by the AI's streaming speech.",
     role: "Software Engineer — Voice Agent & Facial Engine (Lumina)",
     timeline: "2026",
-    techStack: ["TypeScript", "React", "three.js", "Web Audio API", "Web Workers", "Gemini Live API", "Python", "FastAPI", "SQLModel", "PostgreSQL", "Cloud Run", "Firebase Hosting"],
+    techStack: ["TypeScript", "React", "three.js", "Web Audio API", "Web Workers", "Gemini Live API", "Python", "FastAPI", "SQLModel", "PostgreSQL", "Cloud Run"],
     heroImage: {
       src: "/projects/lumina/card.svg",
       alt: "Audio waveform turning into facial animation channels",
@@ -124,25 +115,9 @@ export const PROJECTS = [
       { title: "3D Graphics & Animation", body: "three.js morph targets and bone routing, plus GLB tooling that inventories a rig, measures mouth and eye geometry in millimetres, and shrinks the model from 142 MiB to ~17 MB." },
       { title: "AI Integration", body: "Gemini Live API sessions with ephemeral tokens, a secondary director model for affect and gaze, context compression for long conversations, and latency-first configuration." },
       { title: "Backend & Data", body: "FastAPI and SQLModel services: prompt versioning with an admin UI, API keys and quotas, and a non-blocking transcript and metrics pipeline on PostgreSQL." },
-      { title: "Cloud & Cost", body: "Cloud Run and a Firebase Hosting CDN with secrets in Secret Manager, and per-turn cost reconciliation against the provider's billing data." },
+      { title: "Cloud & Cost", body: "Cloud Run with secrets in Secret Manager, and per-turn cost reconciliation against the provider's billing data." },
     ],
-    galleryCaptions: true,
-    gallery: [
-      {
-        src: "/projects/lumina/aperture-timeline.png",
-        alt: "Chart of rendered mouth aperture over a session, with agent speaking turns highlighted",
-        title: "Diagnosing Lip-Sync From Rendered Frames",
-        caption: "Mouth aperture measured from rendered video, turn by turn.",
-        fit: "contain",
-      },
-      {
-        src: "/projects/lumina/modulation-spectrum.png",
-        alt: "Modulation spectrum of mouth movement compared with the syllabic band",
-        title: "Modulation Spectrum vs. Syllabic Band",
-        caption: "Movement peaked near 1Hz — far below the 4–6Hz rhythm of speech.",
-        fit: "contain",
-      },
-    ],
+    gallery: [],
     challenges: [
       {
         num: "01",
@@ -552,30 +527,30 @@ export const PROJECTS = [
   },
 
   {
-    id: "saniro-erp",
+    id: "saniro-operations",
     caseNumber: 7,
-    title: "<accent>SANIRO</accent> MULTI-BRANCH ERP",
-    shortTitle: "Saniro ERP",
+    title: "<accent>SANIRO</accent> MULTI-BRANCH OPERATIONS PLATFORM",
+    shortTitle: "Saniro Operations Platform",
     tagline:
-      "A custom ERP for a three-branch steel fabrication and roofing business. It replaced paper job cards with one system for orders, payments, branch stock and the workshop floor, so every sheet of steel and every hour of labour is tracked and billed correctly.",
+      "A multi-branch operations platform for an eight-branch steel fabrication and roofing business. It is replacing paper job cards with one system for workshop jobs, roofing orders, hardware sales, payments and branch stock, so every sheet of steel and every hour of labour is tracked and billed correctly.",
     role: "Full Stack Engineer (Two-Engineer Team)",
-    timeline: "3 Months (Aug 2026 - Oct 2026)",
-    techStack: ["TypeScript", "NestJS", "PostgreSQL", "TypeORM", "React 19", "TanStack Query", "TanStack Router", "Zod", "SSE", "pg-boss", "Playwright", "Turborepo"],
+    timeline: "Jun 2026 – Present (In Progress)",
+    techStack: ["TypeScript", "NestJS", "PostgreSQL", "TypeORM", "React 19", "TanStack Query", "TanStack Router", "Zod", "SSE", "Playwright", "Turborepo"],
     heroImage: {
       src: "https://images.unsplash.com/photo-1639322537228-f710d846310a?w=1400&q=80",
       alt: "Abstract network nodes on dark background",
     },
     architecture: {
       body: [
-        "Saniro ERP is a <accent>TypeScript monorepo</accent> (pnpm workspaces + Turborepo) with a <accent>NestJS</accent> API, a <accent>React 19</accent> web app and a shared contract package. The shared package holds every enum, Zod schema, order state machine and error code, so the API and the UI can never drift apart.",
-        "The API is split into 16 domain modules (job cards, roofing orders, payments, ledger, inventory, stock transfers, price list, gate passes, workers, permissions and more) over a <accent>PostgreSQL</accent> schema of 37 tables. Each module follows controller, service and repository layers. Every input is validated with Zod at the boundary and every failure returns a stable error code.",
+        "The platform is a <accent>TypeScript monorepo</accent> (pnpm workspaces + Turborepo) with a <accent>NestJS</accent> API, a <accent>React 19</accent> web app and a shared contract package. The shared package holds every enum, Zod schema, order state machine and error code, so the API and the UI can never drift apart.",
+        "The API is split into 16 domain modules (job cards, roofing orders, hardware sales, payments, ledger, inventory, stock transfers, price list, gate passes, workers, permissions and more) over a <accent>PostgreSQL</accent> schema of 38 tables. Each module follows controller, service and repository layers. Every input is validated with Zod at the boundary and every failure returns a stable error code.",
         "A job card (the customer's order) holds many <accent>work orders</accent>, one per operation: cut, bend, pipe bending, sheet rolling or coil cutting. Each work order carries its measurements in a JSONB spec block and is priced from a central rate table. A line with no matching rate becomes a customized job that a supervisor prices by hand.",
-        "Seven roles, from cashier and supervisor to head-office auditor, see screens filtered to their branch and permissions. Queues update live over <accent>Server-Sent Events</accent>, and background jobs run on <accent>pg-boss</accent> inside Postgres, so PostgreSQL is the only infrastructure the system needs.",
+        "Seven roles, from cashier and supervisor to head-office auditor, see screens filtered to their branch and permissions. Queues update live over <accent>Server-Sent Events</accent>, and PostgreSQL is the only infrastructure the system needs.",
       ],
     },
     techinical_decisions: {
       body: [
-        `<accent>One database, no Redis.</accent> Background jobs use pg-boss in Postgres, live updates are in-process SSE and caching is in memory. For a business of this size that removes a whole class of moving parts while still meeting the under-3-second queue refresh target.`,
+        `<accent>One database, no Redis.</accent> PostgreSQL is the only service. Live updates are in-process SSE and caching is in memory. For a business of this size that removes a whole class of moving parts while still meeting the under-3-second queue refresh target.`,
         `<accent>Money is integers, and the ledger is append-only.</accent> All amounts are stored as cents. A payment and its ledger entry are written in one transaction, and only the LedgerService may write to the ledger. A job card cannot close until its balance due is exactly zero.`,
         `<accent>Branch isolation is enforced on the server.</accent> The branch is never taken from the request body; it comes from the user's role. Head-office roles can read every branch, but any write they attempt on branch work is refused with a 403. Watching and transacting stay separate.`,
         `<accent>Concurrency is handled in the data layer.</accent> Every write sends the record's version (optimistic locking), create calls carry a client request ID so retries never create duplicates, and the database itself checks that stock can never go below zero.`,
@@ -599,9 +574,9 @@ export const PROJECTS = [
       alt: "Complex data structures with glowing network architecture",
     },
     metrics: [
-      { value: "26", label: "Business Rules Enforced" },
-      { value: "310+", label: "Automated API & E2E Tests" },
-      { value: "79", label: "REST Endpoints Across 16 Modules" },
+      { value: "104", label: "REST Endpoints Across 16 Modules" },
+      { value: "8", label: "Branches Unified on One System" },
+      { value: "38", label: "PostgreSQL Tables" },
     ],
   },
 ];

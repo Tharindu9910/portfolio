@@ -41,7 +41,7 @@ const EXPERIENCE = [
     achievements: [
       'Built a real-time voice AI companion on the Google Gemini Live API, streaming audio directly between browser and model to cut per-turn latency by ~280ms',
       'Designed a from-scratch, avatar-independent facial animation engine (TypeScript, three.js) that lip-syncs a 3D avatar to streaming AI speech in real time',
-      'Implemented FastAPI endpoints and PostgreSQL queries behind dashboards and reports for an event-sourced warehouse workflow platform (11 stages, 9 operational teams), with automated backend tests and real-time WebSocket updates',
+      'Implemented FastAPI endpoints and PostgreSQL queries behind dashboards and reports for an event-sourced warehouse workflow platform, with automated backend tests and real-time WebSocket updates',
       'Designed and developed scalable backend services using Python, Flask, Neo4j, and Firestore, serving 500+ active users with sub-100ms response times',
       'Improved data retrieval throughput by ~40% through optimized REST APIs and database queries',
       'Developed graph-based data models using Neo4j and Cypher for complex relational data',

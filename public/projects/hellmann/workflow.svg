@@ -16,7 +16,7 @@
   <rect width="1200" height="520" fill="#111111"/>
 
   <text x="40" y="58" fill="#FFD000" font-size="14" font-weight="700" letter-spacing=".18em">PURCHASE ORDER WORKFLOW</text>
-  <text x="40" y="82" class="s">11 STAGES · 9 TEAMS · LIVE STATE</text>
+  <text x="40" y="82" class="s">MULTI-STAGE · MULTI-TEAM · LIVE STATE</text>
 
   <!-- Row 1 -->
   <rect class="b" x="40" y="120" width="180" height="56" rx="10"/><text class="t" x="130" y="148">Planning</text>
@@ -28,20 +28,20 @@
   <path class="l" d="M680 148H726" marker-end="url(#a)"/>
 
   <!-- Branch -->
-  <rect class="b" x="980" y="70" width="180" height="56" rx="10"/><text class="t" x="1070" y="98">Security Tag</text>
-  <rect class="b" x="980" y="170" width="180" height="56" rx="10"/><text class="t" x="1070" y="198">Sticker</text>
+  <rect class="b" x="980" y="70" width="180" height="56" rx="10"/><text class="t" x="1070" y="98">Tagging</text>
+  <rect class="b" x="980" y="170" width="180" height="56" rx="10"/><text class="t" x="1070" y="198">Labelling</text>
   <path class="l" d="M910 148H945V98H976" marker-end="url(#a)"/>
   <path class="l" d="M945 148V198H976" marker-end="url(#a)"/>
-  <text x="953" y="88" class="s" font-size="10">US</text>
-  <text x="953" y="222" class="s" font-size="10">OTHER</text>
+  <text x="938" y="88" class="s" font-size="10" text-anchor="end">ROUTE A</text>
+  <text x="938" y="222" class="s" font-size="10" text-anchor="end">ROUTE B</text>
 
-  <!-- Merge into FCA -->
+  <!-- Merge into audit -->
   <path class="l" d="M1160 98H1182V262H1070"/>
   <path class="l" d="M1070 226V296" marker-end="url(#a)"/>
 
   <!-- Row 2 (right to left) -->
-  <rect class="b" x="980" y="300" width="180" height="56" rx="10"/><text class="t" x="1070" y="328">FCA Audit</text>
-  <rect class="b" x="730" y="300" width="180" height="56" rx="10"/><text class="t" x="820" y="328">Metal Detection</text>
+  <rect class="b" x="980" y="300" width="180" height="56" rx="10"/><text class="t" x="1070" y="328">Compliance Audit</text>
+  <rect class="b" x="730" y="300" width="180" height="56" rx="10"/><text class="t" x="820" y="328">QA Check</text>
   <rect class="b" x="500" y="300" width="180" height="56" rx="10"/><text class="t" x="590" y="328">Relocation</text>
   <rect class="b" x="270" y="300" width="180" height="56" rx="10"/><text class="t" x="360" y="328">Loading</text>
   <rect x="40" y="300" width="180" height="56" rx="28" fill="#FFD000"/><text class="t" x="130" y="328" style="fill:#111">Dispatch</text>
