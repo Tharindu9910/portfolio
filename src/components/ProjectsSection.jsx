@@ -9,9 +9,9 @@ const projects = [
   {
     id: 1,
     tabs: ['FastAPI', 'React', 'TypeScript', 'PostgreSQL', 'WebSockets', 'Event Sourcing'],
-    image: '/projects/hellmann/workflow.svg',
+    image: '/projects/warehouse/workflow.svg',
     imageAlt: 'Purchase order workflow across warehouse teams',
-    title: 'Hellmann Warehouse Workflow Platform',
+    title: 'Warehouse Workflow Platform',
     description:
       'Event-sourced platform tracking purchase orders across every warehouse team of a 3PL operation, replacing Excel tracking and handwritten paper pick sheets with live tablet and overhead-screen workflows.',
     linkText: 'VIEW CASE STUDY',

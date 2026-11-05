@@ -8,17 +8,17 @@ export const LAST_UPDATED = "OCT 2026";
 
 export const PROJECTS = [
   {
-    id: "hellmann-wms",
+    id: "warehouse-wms",
     caseNumber: 1,
-    title: "<accent>HELLMANN</accent> WAREHOUSE WORKFLOW PLATFORM",
-    shortTitle: "Hellmann Workflow",
+    title: "<accent>WAREHOUSE</accent> WORKFLOW PLATFORM",
+    shortTitle: "Warehouse Workflow",
     tagline:
       "An event-sourced workflow platform that tracks every purchase order through every stage of its journey across the operational teams of a third-party logistics warehouse, replacing Excel tracking, a partial in-house tool and printed pick sheets marked up by hand with live tablet, desktop and overhead-screen workflows",
     role: "Software Engineer (Team Member)",
     timeline: "2026",
     techStack: ["Python", "FastAPI", "SQLAlchemy (async)", "PostgreSQL", "React", "TypeScript", "WebSockets", "RabbitMQ", "Docker", "Cloud Run"],
     heroImage: {
-      src: "/projects/hellmann/workflow.svg",
+      src: "/projects/warehouse/workflow.svg",
       alt: "Purchase order workflow across warehouse teams",
     },
     architecture: {
@@ -35,7 +35,7 @@ export const PROJECTS = [
         "<accent>Ping, then re-fetch.</accent> The server pushes a lightweight \"changed\" signal over WebSockets and screens re-fetch with debouncing, rather than streaming full payloads — keeping dozens of tablets and TV boards consistent with one source of truth. Workflow preconditions run through a whitelisted expression evaluator, never eval.",
       ],
       image: {
-        src: "/projects/hellmann/architecture.svg",
+        src: "/projects/warehouse/architecture.svg",
         alt: "System architecture: React clients, FastAPI api service, PostgreSQL event store, RabbitMQ worker and integration service",
       },
     },
@@ -67,7 +67,7 @@ export const PROJECTS = [
       },
     ],
     challengeImage: {
-      src: "/projects/hellmann/workflow.svg",
+      src: "/projects/warehouse/workflow.svg",
       alt: "Purchase order workflow across warehouse teams with supervisor escalation",
     },
     metrics: [
